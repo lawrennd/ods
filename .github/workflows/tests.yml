@@ -30,7 +30,14 @@ jobs:
     
     - name: Install dependencies
       run: |
-        poetry install --with dev --extras "all-datasets"
+        poetry install --with dev
+    
+    # Note: Poetry doesn't install extras for your own project, only for dependencies.
+    # We need pip to install our own project with extras to test all optional features.
+    # This ensures packages like gpxpy, tables, etc. are available for testing.
+    - name: Install project with all extras for testing
+      run: |
+        pip install .[all-datasets]
     
     - name: Run tests with pytest
       run: |
