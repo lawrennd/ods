@@ -30,7 +30,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-        poetry install --with dev --extras "All datasets"
+        poetry install --with dev --extras "all-datasets"
     
     - name: Run tests with pytest
       run: |
