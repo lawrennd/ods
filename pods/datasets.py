@@ -1320,7 +1320,7 @@ if False:
 
               /  1, iff SNPij==(B1,B1)
         Aij = |  0, iff SNPij==(B1,B2)
-              \ -1, iff SNPij==(B2,B2)
+              \\ -1, iff SNPij==(B2,B2)
 
         The SNP data and the meta information (such as iid, sex and phenotype) are
         stored in the dataframe datadf, index is the Individual ID,
@@ -2545,7 +2545,7 @@ if False:
 
               /  1, iff SNPij==(B1,B1)
         Aij = |  0, iff SNPij==(B1,B2)
-              \ -1, iff SNPij==(B2,B2)
+              \\ -1, iff SNPij==(B2,B2)
 
         The SNP data and the meta information (such as iid, sex and phenotype) are
         stored in the dataframe datadf, index is the Individual ID,
