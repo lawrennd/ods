@@ -53,7 +53,7 @@ datasets:
   license: null
   size: 1100584
   urls:
-    - http://www.cs.nyu.edu/~roweis/data/
+    - https://github.com/lawrennd/datasets_mirror/raw/main/brendan_faces/
 - name: ceres
   citation: Monatlicher Correspondenz September 1801. Franz von Zach (editor). Summary of data from a Letter of Giuseppe Piazzi.
   details: Twenty two celestial observations of the dwarf planet Ceres as observed by Giuseppe Piazzi from his Palermo observatory from January 1st to February 11th 1801. Transcribed (perhaps with errors) by Neil Lawrence.
@@ -495,7 +495,7 @@ datasets:
     size: 8561331
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/'
-      - 'http://www.cs.nyu.edu/~roweis/data/'
+      - 'https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_glasses/'
   - name: olivetti_glasses
     citation: Information recorded in olivetti_faces entry. Should be used from there.
     details: Information recorded in olivetti_faces entry. Should be used from there.
@@ -673,7 +673,7 @@ datasets:
     size: 11136562
     urls:
       - >-
-        https://energydata.info/dataset/f85d1796-e7f2-4630-be84-79420174e3bd/resource/6e640a13-cab4-457b-b9e6-0336051bac27/download/
+        https://github.com/lawrennd/datasets_mirror/raw/main/nigerian_population/
   - name: nigerian_population
     citation: >-
       Nigeria - Subnational Population Statistics by administrative level 1 and

@@ -82,7 +82,7 @@
         "license": null,
         "size": 1100584,
         "urls": [
-            "http://www.cs.nyu.edu/~roweis/data/"
+            "https://github.com/lawrennd/datasets_mirror/raw/main/brendan_faces/"
         ]
     },
     "ceres": {
@@ -479,7 +479,7 @@
         "size": 8561331,
         "urls": [
             "https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/",
-            "http://www.cs.nyu.edu/~roweis/data/"
+            "https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_glasses/"
         ]
     },
     "olivetti_glasses": {
@@ -616,7 +616,7 @@
         "license": null,
         "size": 73592,
         "urls": [
-            "https://data.humdata.org/dataset/a7c3de5e-ff27-4746-99cd-05f2ad9b1066/resource/d9fc551a-b5e4-4bed-9d0d-b047b6961817/download/"
+            "https://github.com/lawrennd/datasets_mirror/raw/main/nigerian_population/"
         ]
     },
     "pmlr": {

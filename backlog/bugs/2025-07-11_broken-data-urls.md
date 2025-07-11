@@ -1,7 +1,7 @@
 ---
 id: "2025-07-11_broken-data-urls"
 title: "Fix Broken Data URLs in Dataset Resources"
-status: "Ready"
+status: "Completed"
 priority: "Medium"
 created: "2025-07-11"
 last_updated: "2025-07-11"
@@ -28,13 +28,13 @@ Several dataset URLs in `pods/data_resources.json` are no longer accessible, cau
 
 ## Acceptance Criteria
 
-- [ ] All broken URLs are identified and documented
-- [ ] Working alternative URLs are found for each dataset
-- [ ] `pods/data_resources.json` is updated with new URLs
-- [ ] `test_brendan_faces_dimensions` passes without network errors
-- [ ] `test_olivetti_glasses_dimensions` passes without network errors
-- [ ] `test_nigerian_population_dimensions` passes without network errors
-- [ ] All datasets can be downloaded successfully in CI environment
+- [x] All broken URLs are identified and documented
+- [x] Working alternative URLs are found for each dataset
+- [x] `pods/data_resources.json` is updated with new URLs
+- [x] `test_brendan_faces_dimensions` passes without network errors
+- [x] `test_olivetti_glasses_dimensions` passes without network errors
+- [x] `test_nigerian_population_dimensions` passes without network errors
+- [x] All datasets can be downloaded successfully in CI environment
 
 ## Implementation Notes
 
@@ -62,4 +62,11 @@ Several dataset URLs in `pods/data_resources.json` are no longer accessible, cau
 ## Progress Updates
 
 ### 2025-07-11
-Task created to track broken data URLs identified in test suite analysis. 
+Task created to track broken data URLs identified in test suite analysis.
+
+### 2025-07-11
+✅ **COMPLETED** - All broken URLs successfully fixed!
+- Updated `brendan_faces` URL to GitHub mirror
+- Updated `olivetti_faces` URL to GitHub mirror  
+- Updated `nigerian_population` URL to GitHub mirror
+- All three tests now pass: `test_brendan_faces_dimensions`, `test_olivetti_glasses_dimensions`, `test_nigerian_population_dimensions` 
