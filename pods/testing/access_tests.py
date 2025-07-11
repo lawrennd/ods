@@ -1,4 +1,4 @@
-from nose.tools import eq_, ok_, raises
+import pytest
 import pods
 import os
 import re
@@ -23,7 +23,7 @@ fake_url = "http://pandemonium.sinclair.spectrum.absolute.blast.google.gobsmacka
 bogus_file = "http://www.bbc.co.uk/bogus_file.html"
 
 
-def test_downloard_url():
+def test_download_url():
     """access_tests: Test downloading of a URL."""
 
     pods.access.download_url(
@@ -31,29 +31,26 @@ def test_downloard_url():
     )
     filename = os.path.join(store_directory, save_name)
 
-    ok_(os.path.isfile(filename), "File does not exist in suggested location.")
+    assert os.path.isfile(filename), "File does not exist in suggested location."
     file = open(filename, "r")
 
     found_title = False
     for line in file:
         if re.search(title, line):
             found_title = True
-    ok_(
-        found_title,
-        "Could not find " + title + " in " + filename + " downloaded from " + test_url,
-    )
+    assert found_title, "Could not find " + title + " in " + filename + " downloaded from " + test_url
 
 
-@raises(URLError, ValueError)
 def test_graceful_failure_fake_url():
     """access_tests: Test graceful failure of a fake url."""
-    pods.access.download_url(fake_url)
+    with pytest.raises((URLError, ValueError)):
+        pods.access.download_url(fake_url)
 
 
-@raises(HTTPError, ValueError)
 def test_graceful_failure_bogus_file():
     """access_tests: Test graceful failure of a bogus file."""
-    pods.access.download_url(bogus_file)
+    with pytest.raises((HTTPError, ValueError)):
+        pods.access.download_url(bogus_file)
 
 
 import filecmp

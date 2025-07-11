@@ -4,6 +4,7 @@ import pods
 import types
 import mock
 import sys
+import pytest
 
 
 # pods.datasets.overide_manual_authorize=True
@@ -79,91 +80,43 @@ dataset_selection = [
 ]
 
 
-def gtf_(dataset_name, dataset_function, arg=None, docstr=None):
-    """Generate test function for testing the given data set."""
+def test_dataset_dimensions(dataset_name, dataset_function, arg=None):
+    """Test function for testing dataset dimensions."""
+    with mock.patch('builtins.input', return_value="Y"):
+        if arg is None:
+            d = dataset_function()
+        else:
+            d = dataset_function(arg)
+    
+    ks = d.keys()
+    
+    # Check dimensions
+    if "Y" in ks and "X" in ks:
+        assert d["X"].shape[0] == d["Y"].shape[0]
+    if "Ytest" in ks and "Xtest" in ks:
+        assert d["Xtest"].shape[0] == d["Ytest"].shape[0]
+    if "Y" in ks and "Ytest" in ks:
+        assert d["Y"].shape[1] == d["Ytest"].shape[1]
+    if "X" in ks and "Xtest" in ks:
+        assert d["X"].shape[1] == d["Xtest"].shape[1]
+    if "covariates" in ks and "X" in ks:
+        assert len(d["covariates"]) == d["X"].shape[1]
+    if "response" in ks and "Y" in ks:
+        assert len(d["response"]) == d["Y"].shape[1]
 
-    def test_function(self):
-        with mock.patch('builtins.input', "Y"):
-            if arg is None:
-                tester = DatasetTester(dataset_function)
-            else:
-                tester = DatasetTester(dataset_function, arg)
-            tester.checkdims()
 
-    test_function.__name__ = "test_" + dataset_name
-    test_function.__doc__ = (
-        "datasets_tests: Test function pods.datasets." + dataset_name
+# Generate test functions for each dataset
+for dataset in dataset_test:
+    test_name = f"test_{dataset['dataset_name']}_dimensions"
+    test_func = lambda d=dataset: test_dataset_dimensions(
+        d["dataset_name"], d["dataset_function"], d["arg"]
     )
-    return test_function
-
-
-def populate_datasets(cls, dataset_test):
-    """populate_dataset: Auto create dataset test functions."""
-    for dataset in dataset_test:
-        base_funcname = "test_" + dataset["dataset_name"]
-        funcname = base_funcname
-        i = 1
-        while funcname in cls.__dict__.keys():
-            funcname = base_funcname + str(i)
-            i += 1
-        _method = gtf_(**dataset)
-        setattr(cls, _method.__name__, _method)
-
-
-class DatasetTester(unittest.TestCase):
-    """
-    This class is the base class we use for testing a dataset.
-    """
-
-    def __init__(self, dataset, name=None, **kwargs):
-        if name is None:
-            name = dataset.__name__
-        self.name = name
-        self.dataset = dataset
-        self.kwargs = kwargs
-        with mock.patch('builtins.input', return_value="Y"):
-            self.d = self.dataset(**self.kwargs)
-        self.ks = self.d.keys()
-        self.checkdims()
-        self.checkstats()
-
-    def checkdims(self):
-        """Check the dimensions of the data in the dataset"""
-        if "Y" in self.ks and "X" in self.ks:
-            self.assertTrue(self.d["X"].shape[0] == self.d["Y"].shape[0])
-        if "Ytest" in self.ks and "Xtest" in self.ks:
-            self.assertTrue(self.d["Xtest"].shape[0] == self.d["Ytest"].shape[0])
-        if "Y" in self.ks and "Ytest" in self.ks:
-            self.assertTrue(self.d["Y"].shape[1] == self.d["Ytest"].shape[1])
-        if "X" in self.ks and "Xtest" in self.ks:
-            self.assertTrue(self.d["X"].shape[1] == self.d["Xtest"].shape[1])
-
-        if "covariates" in self.ks and "X" in self.ks:
-            self.assertTrue(len(self.d["covariates"]) == self.d["X"].shape[1])
-
-        if "response" in self.ks and "Y" in self.ks:
-            self.assertTrue(len(self.d["response"]) == self.d["Y"].shape[1])
-
-    def checkstats(self):
-        pass
+    test_func.__name__ = test_name
+    test_func.__doc__ = f"datasets_tests: Test function pods.datasets.{dataset['dataset_name']}"
+    globals()[test_name] = test_func
 
 
 class DatasetsTests(unittest.TestCase):
-    def __init__(self, *args, **kwargs):
-        super(DatasetsTests, self).__init__(*args, **kwargs)
-        # Auto create the test functions
-        # for dataset in dataset_test:
-        #     """Auto create dataset test functions."""
-        #     base_funcname = 'test_' + dataset['dataset_name']
-        #     funcname = base_funcname
-        #     i = 1
-        #     while(funcname in self.__dict__.keys()):
-        #         funcname = base_funcname +str(i)
-        #         i += 1
-        #     test_function = gtf_(**dataset)
-        #     test_function.__name__ = funcname
-        #     self.__dict__[funcname]=types.MethodType(test_function, self)
-
     def download_data(self, dataset_name):
         """datasets_tests: Test the data download."""
         pods.access.clear_cache(dataset_name)
@@ -198,7 +151,4 @@ class DatasetsTests(unittest.TestCase):
     def test_data_downloads(self):
         """datasets_tests: Test the data download."""
         for dataset_name in dataset_selection:
-            yield self.download_data, dataset_name
-
-
-populate_datasets(DatasetsTests, dataset_test)
+            self.download_data(dataset_name)
