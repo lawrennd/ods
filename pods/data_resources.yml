@@ -152,7 +152,7 @@ datasets:
   license: null
   size: 1
   urls:
-    - http://www.football-data.co.uk/mmz4281/
+    - http://github.com/lawrennd/datasets_mirror/raw/main/football_data/
 - name: fruitfly_tomancak
   citation: ""
   details: ""
