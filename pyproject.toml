@@ -9,7 +9,9 @@ description = "Python software for Open Data Science"
 authors = ["Neil D. Lawrence <lawrennd@gmail.com>"]
 readme = "README.md"
 homepage = "https://github.com/lawrennd/ods"
+repository = "https://github.com/lawrennd/ods"
 license = "MIT"
+packages = [{include = "pods"}]
 include = [
     "pods/defaults.cfg",
     "pods/data_resources.json",
