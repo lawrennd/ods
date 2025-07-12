@@ -244,6 +244,7 @@ def nigerian_covid(data_set="nigerian_covid", refresh_data=False):
             "date_admission_hospital",
             "death_date",
         ],
+        date_parser=lambda x: pd.to_datetime(x, errors='coerce'),
     )
     return access.data_details_return({"Y": Y}, data_set)
 
@@ -828,7 +829,7 @@ def pumadyn(seed=default_seed, data_set="pumadyn-32nm"):
         dir_path = os.path.join(access.DATAPATH, data_set)
         tar = tarfile.open(os.path.join(dir_path, "pumadyn-32nm.tar.gz"))
         print("Extracting file.")
-        tar.extractall(path=dir_path)
+        tar.extractall(path=dir_path, filter='data')
         tar.close()
     # Data is variance 1, no need to normalize.
     data = np.loadtxt(
@@ -1736,7 +1737,7 @@ def download_rogers_girolami_data(data_set="rogers_girolami_data"):
         tar_file = os.path.join(path, "firstcoursemldata.tar.gz")
         tar = tarfile.open(tar_file)
         print("Extracting file.")
-        tar.extractall(path=path)
+        tar.extractall(path=path, filter='data')
         tar.close()
 
 
@@ -1948,12 +1949,21 @@ def movie_body_count_r_classify(data_set="movie_body_count"):
     """Data set of movies and body count for movies scraped from www.MovieBodyCounts.com created by Simon Garnier and Randy Olson for exploring differences between Python and R."""
     data = movie_body_count()["Y"]
 
-    X = data[["Year", "Body_Count"]]
-    Y = data["MPAA_Rating"] == "R"  # set label to be positive for R rated films.
+    # Robust method (handles both lists and strings)
+    genre_pairs = []
+    for idx, genres_str in data["Genre"].items():
+        if isinstance(genres_str, list):
+            genres = genres_str
+        elif pd.notna(genres_str):
+            genres = genres_str.split("|")
+        else:
+            genres = []
+        for genre in genres:
+            genre_pairs.append((idx, genre.strip()))
+    s = pd.Series([pair[1] for pair in genre_pairs], index=[pair[0] for pair in genre_pairs])
 
-    # Create series of movie genres with the relevant index
-    s = data["Genre"].str.split("|").apply(pd.Series, 1).stack()
-    s.index = s.index.droplevel(-1)  # to line up with df's index
+    X = data[["Year", "Body_Count"]].copy()
+    Y = data["MPAA_Rating"] == "R"  # set label to be positive for R rated films.
 
     # Extract from the series the unique list of genres.
     genres = s.unique()
@@ -2148,7 +2158,7 @@ def creep_data(data_set="creep_rupture"):
         path = os.path.join(access.DATAPATH, data_set)
         tar_file = os.path.join(path, "creeprupt.tar")
         tar = tarfile.open(tar_file)
-        tar.extractall(path=path)
+        tar.extractall(path=path, filter='data')
         tar.close()
     all_data = np.loadtxt(os.path.join(access.DATAPATH, data_set, "taka"))
     y = all_data[:, 1:2].copy()
@@ -2532,7 +2542,7 @@ def elevators(data_set="elevators", seed=default_seed):
         access.download_data(data_set)
         dir_path = os.path.join(access.DATAPATH, data_set)
         tar = tarfile.open(name=os.path.join(dir_path, "elevators.tgz"))
-        tar.extractall(dir_path)
+        tar.extractall(dir_path, filter='data')
         tar.close()
 
     elevator_path = os.path.join(access.DATAPATH, "elevators", "Elevators")
