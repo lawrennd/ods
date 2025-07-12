@@ -80,7 +80,7 @@ dataset_selection = [
 ]
 
 
-def test_dataset_dimensions(dataset_name, dataset_function, arg=None):
+def _test_dataset_dimensions(dataset_name, dataset_function, arg=None):
     """Test function for testing dataset dimensions."""
     with mock.patch('builtins.input', return_value="Y"):
         if arg is None:
@@ -108,7 +108,7 @@ def test_dataset_dimensions(dataset_name, dataset_function, arg=None):
 # Generate test functions for each dataset
 for dataset in dataset_test:
     test_name = f"test_{dataset['dataset_name']}_dimensions"
-    test_func = lambda d=dataset: test_dataset_dimensions(
+    test_func = lambda d=dataset: _test_dataset_dimensions(
         d["dataset_name"], d["dataset_function"], d["arg"]
     )
     test_func.__name__ = test_name
