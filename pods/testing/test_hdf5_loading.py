@@ -1,50 +1,97 @@
 #!/usr/bin/env python3
 """
-Test script to verify HDF5 loading works with h5py.
+Pytest tests to verify HDF5 loading works with h5py.
 """
 
 import os
-import sys
+import pytest
 import numpy as np
-import pandas as pd
 
-def test_h5py_loading():
-    """Test that we can load HDF5 files using h5py."""
-    try:
-        import h5py
-        print("✓ h5py is available")
-    except ImportError:
-        print("✗ h5py is not available")
-        return False
-    
-    # Test creating a simple HDF5 file with h5py
-    test_file = "test_data.h5"
-    
-    # Create test data
-    data = {
+# Skip all tests if h5py is not available
+try:
+    import h5py
+    H5PY_AVAILABLE = True
+except ImportError:
+    H5PY_AVAILABLE = False
+
+@pytest.fixture
+def sample_data():
+    """Fixture providing sample data for testing."""
+    return {
         'month': np.array([1, 2, 3, 4, 5]),
         'day_of_month': np.array([1, 15, 20, 25, 30]),
         'ArrDelay': np.array([10, -5, 15, -2, 8]),
         'Year': np.array([2015, 2015, 2015, 2015, 2015])
     }
-    
-    # Save with h5py
-    with h5py.File(test_file, 'w') as f:
-        for key, value in data.items():
+
+@pytest.fixture
+def advanced_data():
+    """Fixture providing advanced test data with different types."""
+    return {
+        'integers': np.array([1, 2, 3, 4, 5], dtype=np.int32),
+        'floats': np.array([1.1, 2.2, 3.3, 4.4, 5.5], dtype=np.float64),
+        'strings': np.array(['a', 'b', 'c', 'd', 'e'], dtype='S1'),
+        'booleans': np.array([True, False, True, False, True], dtype=np.bool_)
+    }
+
+@pytest.fixture
+def temp_h5_file():
+    """Fixture providing a temporary HDF5 file path."""
+    return "test_data.h5"
+
+@pytest.fixture
+def temp_advanced_h5_file():
+    """Fixture providing a temporary advanced HDF5 file path."""
+    return "test_advanced.h5"
+
+@pytest.mark.skipif(not H5PY_AVAILABLE, reason="h5py is not available")
+def test_h5py_import():
+    """Test that h5py can be imported."""
+    import h5py
+    assert h5py is not None
+
+@pytest.mark.skipif(not H5PY_AVAILABLE, reason="h5py is not available")
+def test_basic_h5py_creation_and_loading(sample_data, temp_h5_file):
+    """Test basic h5py file creation and loading."""
+    # Create HDF5 file
+    with h5py.File(temp_h5_file, 'w') as f:
+        for key, value in sample_data.items():
             f.create_dataset(key, data=value)
     
-    print("✓ Created test HDF5 file with h5py")
+    # Verify file was created
+    assert os.path.exists(temp_h5_file)
     
-    # Load with h5py (like in our modified code)
-    with h5py.File(test_file, 'r') as f:
+    # Load data from HDF5 file
+    with h5py.File(temp_h5_file, 'r') as f:
         columns = list(f.keys())
         data_arrays = {}
         for col in columns:
             data_arrays[col] = f[col][:]
     
-    print("✓ Loaded data with h5py")
+    # Verify all data was loaded correctly
+    for key, expected_data in sample_data.items():
+        assert key in data_arrays
+        assert np.array_equal(data_arrays[key], expected_data)
     
-    # Test the data processing logic
+    # Clean up
+    os.remove(temp_h5_file)
+
+@pytest.mark.skipif(not H5PY_AVAILABLE, reason="h5py is not available")
+def test_data_processing_logic(sample_data, temp_h5_file):
+    """Test the data processing logic used in the original code."""
+    # Create HDF5 file
+    with h5py.File(temp_h5_file, 'w') as f:
+        for key, value in sample_data.items():
+            f.create_dataset(key, data=value)
+    
+    # Load data
+    with h5py.File(temp_h5_file, 'r') as f:
+        columns = list(f.keys())
+        data_arrays = {}
+        for col in columns:
+            data_arrays[col] = f[col][:]
+    
+    # Apply the data processing logic
     if "Year" in data_arrays:
         del data_arrays["Year"]
     
@@ -52,59 +99,111 @@ def test_h5py_loading():
     remaining_cols = list(data_arrays.keys())
     Xall = np.column_stack([data_arrays[col] for col in remaining_cols])
     
-    print(f"✓ Processed data: X shape {Xall.shape}, Y shape {Yall.shape}")
+    # Verify the results
+    assert Xall.shape == (5, 2)  # 5 rows, 2 columns (month, day_of_month)
+    assert Yall.shape == (5, 1)  # 5 rows, 1 column (ArrDelay)
+    assert "Year" not in data_arrays
+    assert "ArrDelay" not in data_arrays
+    assert len(remaining_cols) == 2
+    assert "month" in remaining_cols
+    assert "day_of_month" in remaining_cols
     
     # Clean up
-    os.remove(test_file)
-    print("✓ Cleaned up test file")
-    
-    return True
+    os.remove(temp_h5_file)
 
-def test_pandas_h5py_backend():
-    """Test that pandas can use h5py as backend for HDF5."""
-    try:
-        import h5py
-        print("✓ h5py is available for pandas backend")
-    except ImportError:
-        print("✗ h5py is not available for pandas backend")
-        return False
+@pytest.mark.skipif(not H5PY_AVAILABLE, reason="h5py is not available")
+def test_advanced_h5py_features(advanced_data, temp_advanced_h5_file):
+    """Test advanced h5py features like groups and attributes."""
+    # Create advanced HDF5 file with groups and attributes
+    with h5py.File(temp_advanced_h5_file, 'w') as f:
+        # Create a group
+        group = f.create_group('data')
+        
+        # Add datasets to the group
+        for key, value in advanced_data.items():
+            dataset = group.create_dataset(key, data=value)
+            # Add attributes to the dataset
+            dataset.attrs['description'] = f'Dataset containing {key}'
+            dataset.attrs['shape'] = value.shape
+            dataset.attrs['dtype'] = str(value.dtype)
+        
+        # Add global attributes
+        f.attrs['created_by'] = 'test_h5py_advanced_features'
+        f.attrs['version'] = '1.0'
     
-    # Create test data
-    df = pd.DataFrame({
-        'month': [1, 2, 3, 4, 5],
-        'day_of_month': [1, 15, 20, 25, 30],
-        'ArrDelay': [10, -5, 15, -2, 8],
-        'Year': [2015, 2015, 2015, 2015, 2015]
-    })
+    # Verify file was created
+    assert os.path.exists(temp_advanced_h5_file)
     
-    test_file = "test_pandas.h5"
-    
-    # Save with pandas (should use h5py backend)
-    df.to_hdf(test_file, key='data', mode='w')
-    print("✓ Saved DataFrame to HDF5 with pandas")
-    
-    # Load with pandas
-    loaded_df = pd.read_hdf(test_file, key='data')
-    print("✓ Loaded DataFrame from HDF5 with pandas")
+    # Load and verify the data
+    with h5py.File(temp_advanced_h5_file, 'r') as f:
+        # Check global attributes
+        assert f.attrs['created_by'] == 'test_h5py_advanced_features'
+        assert f.attrs['version'] == '1.0'
+        
+        # Access the group
+        group = f['data']
+        
+        # Load and verify each dataset
+        for key, expected_data in advanced_data.items():
+            dataset = group[key]
+            loaded_data = dataset[:]
+            
+            # Check data
+            assert np.array_equal(loaded_data, expected_data)
+            
+            # Check attributes
+            assert dataset.attrs['description'] == f'Dataset containing {key}'
+            assert dataset.attrs['shape'] == expected_data.shape
+            assert dataset.attrs['dtype'] == str(expected_data.dtype)
     
     # Clean up
-    os.remove(test_file)
-    print("✓ Cleaned up test file")
+    os.remove(temp_advanced_h5_file)
+
+@pytest.mark.skipif(not H5PY_AVAILABLE, reason="h5py is not available")
+def test_h5py_file_structure(sample_data, temp_h5_file):
+    """Test HDF5 file structure and metadata."""
+    # Create HDF5 file
+    with h5py.File(temp_h5_file, 'w') as f:
+        for key, value in sample_data.items():
+            f.create_dataset(key, data=value)
     
-    return True
+    # Check file structure
+    with h5py.File(temp_h5_file, 'r') as f:
+        # Check that all expected datasets exist
+        for key in sample_data.keys():
+            assert key in f
+            assert isinstance(f[key], h5py.Dataset)
+        
+        # Check dataset properties
+        for key, expected_data in sample_data.items():
+            dataset = f[key]
+            assert dataset.shape == expected_data.shape
+            assert dataset.dtype == expected_data.dtype
+            assert dataset.size == expected_data.size
+    
+    # Clean up
+    os.remove(temp_h5_file)
+
+@pytest.mark.skipif(not H5PY_AVAILABLE, reason="h5py is not available")
+def test_h5py_version():
+    """Test that h5py version is available and reasonable."""
+    import h5py
+    version = h5py.version.version
+    assert version is not None
+    assert isinstance(version, str)
+    # Version should be in format like "3.8.0" or "3.9.0"
+    assert len(version.split('.')) >= 2
+
+@pytest.mark.skipif(not H5PY_AVAILABLE, reason="h5py is not available")
+def test_h5py_hdf5_version():
+    """Test that HDF5 version information is available."""
+    import h5py
+    hdf5_version = h5py.version.hdf5_version
+    assert hdf5_version is not None
+    assert isinstance(hdf5_version, str)
+    # HDF5 version should be in format like "1.12.2" or "1.13.0"
+    assert len(hdf5_version.split('.')) >= 2
 
 if __name__ == "__main__":
-    print("Testing HDF5 loading with h5py...")
-    print("=" * 50)
-    
-    success1 = test_h5py_loading()
-    print()
-    
-    success2 = test_pandas_h5py_backend()
-    print()
-    
-    if success1 and success2:
-        print("✓ All tests passed! HDF5 loading works with h5py.")
-    else:
-        print("✗ Some tests failed. Check the output above.")
-        sys.exit(1) 
+    # Allow running as script for backward compatibility
+    pytest.main([__file__, "-v"]) 
