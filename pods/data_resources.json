@@ -479,7 +479,7 @@
         "size": 8561331,
         "urls": [
             "https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/",
-            "https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_glasses/"
+            "https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/"
         ]
     },
     "olivetti_glasses": {
@@ -497,7 +497,7 @@
         "size": 4261047,
         "urls": [
             "https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/",
-            "http://www.cs.nyu.edu/~roweis/data/"
+            "https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/"
         ]
     },
     "olympic_marathon_men": {

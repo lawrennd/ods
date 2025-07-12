@@ -495,7 +495,7 @@ datasets:
     size: 8561331
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/'
-      - 'https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_glasses/'
+      - 'https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/'
   - name: olivetti_glasses
     citation: Information recorded in olivetti_faces entry. Should be used from there.
     details: Information recorded in olivetti_faces entry. Should be used from there.
@@ -506,7 +506,7 @@ datasets:
     size: 4261047
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/'
-      - 'http://www.cs.nyu.edu/~roweis/data/'
+      - 'https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/'
   - name: olympic_marathon_men
     citation: null
     details: >-

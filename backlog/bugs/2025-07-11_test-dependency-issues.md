@@ -22,7 +22,7 @@ tags:
 Several tests are failing due to missing Python package dependencies that are required for specific dataset functionality. The dependencies are defined in `pyproject.toml` under the `all-datasets` extra but may not be properly installed in the CI environment.
 
 **Affected Tests:**
-1. `test_airline_delay_dimensions` - Missing `pytables` for HDF5 file support
+1. `test_airline_delay_dimensions` - Missing `h5py` for HDF5 file support (replaced `pytables`)
 2. `test_hospitalized_covid_dimensions` - Missing `openpyxl` for Excel file support  
 3. `test_kepler_lightcurves_dimensions` - Missing `astropy` for astronomical data processing
 4. `test_epomeo_gpx_dimensions` - Missing `gpxpy` for GPS data processing
@@ -41,7 +41,7 @@ Several tests are failing due to missing Python package dependencies that are re
 The dependencies are already defined in `pyproject.toml`:
 ```toml
 [tool.poetry.extras]
-all-datasets = ["tables", "pytrends", "geopandas", "astropy", "netpbmfile", "gpxpy", "openpyxl"]
+all-datasets = ["h5py", "pytrends", "geopandas", "astropy", "netpbmfile", "gpxpy", "openpyxl"]
 ```
 
 The GitHub Actions workflow should install with:
@@ -50,7 +50,7 @@ poetry install --with dev --extras "all-datasets"
 ```
 
 **Required packages:**
-- `pytables` (for HDF5 support)
+- `h5py` (for HDF5 support - replaced `pytables`)
 - `openpyxl` (for Excel support)
 - `astropy` (for astronomical data)
 - `gpxpy` (for GPS data)

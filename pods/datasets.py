@@ -424,7 +424,9 @@ def football_data(season="1617", data_set="football_data"):
             return len(access.football_dict) + 1
 
     def datestr2num(s):
-        return util.date2num(datetime.datetime.strptime(s.decode("utf-8"), "%d/%m/%y"))
+        if isinstance(s, bytes):
+            s = s.decode("utf-8")
+        return util.date2num(datetime.datetime.strptime(s, "%d/%m/%y"))
 
     data_set_season = data_set + "_" + season
     access.data_resources[data_set_season] = copy.deepcopy(access.data_resources[data_set])
@@ -1208,12 +1210,37 @@ def airline_delay(
     dir_path = os.path.join(access.DATAPATH, data_set)
     filename = os.path.join(dir_path, "airline_delay.hdf")
 
-    # 1. Load the dataset
-    data = pd.read_hdf(filename)
+    import h5py
+    import pandas as pd
+    import numpy as np
+
+    # 1. Load the dataset using h5py instead of pd.read_hdf
+    with h5py.File(filename, 'r') as f:
+        group = f['airline_delay']
+
+        # Get all data blocks
+        all_data = []
+
+        block_num = 0
+        while f'block{block_num}_values' in group:
+            # Get data for this block (already in correct orientation)
+            block_data = group[f'block{block_num}_values'][:]
+            all_data.append(block_data)
+            block_num += 1
+
+        # Combine all blocks horizontally (along columns)
+        combined_data = np.concatenate(all_data, axis=1)
+
+        # Get column names from axis0 (not from individual block items)
+        column_names = group['axis0'][:]
+        column_names = [col.decode() if isinstance(col, bytes) else col for col in column_names]
+
+        # Create DataFrame
+        data = pd.DataFrame(combined_data, columns=column_names)
 
     # WARNING: removing year
-    data.pop("Year")
-
+    if "Year" in data.columns:
+        data.pop("Year")        
     # Get data matrices
     Yall = data.pop("ArrDelay").values[:, None]
     Xall = data.values
@@ -2042,7 +2069,7 @@ def movielens100k(data_set="movielens100k"):
 
 
 def nigeria_nmis_facility_database(data_set="nigeria_nmis_facility_database"):
-    """A rigorous, geo-referenced baseline facility inventory across Nigeria is created spanning from 2009 to 2011 with an additional survey effort to increase coverage in 2014, to build Nigeria’s first nation-wide inventory of health facility. The database includes 34,139 health facilities info in Nigeria."""
+    """A rigorous, geo-referenced baseline facility inventory across Nigeria is created spanning from 2009 to 2011 with an additional survey effort to increase coverage in 2014, to build Nigeria's first nation-wide inventory of health facility. The database includes 34,139 health facilities info in Nigeria."""
     if not access.data_available(data_set):
         access.download_data(data_set)
 

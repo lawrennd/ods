@@ -63,7 +63,7 @@ REQUIRED = [
     "pandas",
     "PyYAML",
     "scipy",
-    "tables",
+    "h5py",
 ]
 
 # What packages are optional?
