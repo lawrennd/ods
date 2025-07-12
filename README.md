@@ -3,6 +3,8 @@ pods
 
 <p align="left">
   <a href="https://github.com/lawrennd/ods"><img alt="GitHub Actions status" src="https://github.com/lawrennd/ods/workflows/code-tests/badge.svg"></a>
+  <a href="https://codecov.io/gh/lawrennd/ods"><img alt="Codecov" src="https://codecov.io/gh/lawrennd/ods/branch/main/graph/badge.svg"></a>
+  <a href="https://codecov.io/gh/lawrennd/ods"><img alt="Codecov" src="https://img.shields.io/codecov/c/github/lawrennd/ods"></a>
 </p>
 
 # Python open data science software. 
