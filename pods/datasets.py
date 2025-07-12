@@ -224,7 +224,7 @@ if GEOPANDAS_AVAILABLE:
         from geopandas import read_file
 
         Y = read_file(os.path.join(access.DATAPATH, data_set, states_file), layer=1)
-        Y.crs = "EPSG:4326"
+        Y = Y.set_crs("EPSG:4326")
         Y.set_index("admin1Name_en")
         return access.data_details_return({"Y": Y}, data_set)
 
@@ -235,17 +235,29 @@ def nigerian_covid(data_set="nigerian_covid", refresh_data=False):
 
     dir_path = os.path.join(access.DATAPATH, data_set)
     filename = os.path.join(dir_path, "line-list-nigeria.csv")
-    Y = pd.read_csv(
-        filename,
-        parse_dates=[
-            "date",
-            "date_confirmation",
-            "date_onset_symptoms",
-            "date_admission_hospital",
-            "death_date",
-        ],
-        date_parser=lambda x: pd.to_datetime(x, errors='coerce'),
-    )
+    Y = pd.read_csv(filename)
+    # Convert date columns using the newer pandas API
+    date_columns = [
+        "date",
+        "date_confirmation", 
+        "date_onset_symptoms",
+        "date_admission_hospital",
+        "death_date",
+    ]
+    for col in date_columns:
+        if col in Y.columns:
+            # Handle the specific date formats found in the Nigerian COVID data
+            # Formats: M/D/YYYY, MM/DD/YYYY, DD-MMM-YY, and date ranges
+            try:
+                # First try the most common format M/D/YYYY or MM/DD/YYYY
+                Y[col] = pd.to_datetime(Y[col], format='%m/%d/%Y', errors='coerce')
+            except ValueError:
+                try:
+                    # Try DD-MMM-YY format
+                    Y[col] = pd.to_datetime(Y[col], format='%d-%b-%y', errors='coerce')
+                except ValueError:
+                    # For date ranges or other formats, use flexible parsing
+                    Y[col] = pd.to_datetime(Y[col], errors='coerce')
     return access.data_details_return({"Y": Y}, data_set)
 
 
