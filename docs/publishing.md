@@ -4,10 +4,10 @@ This repository is configured to automatically publish to PyPI when a new releas
 
 ## How it works
 
-1. **Create a release** on GitHub with a version tag (e.g., `v0.1.18`)
-2. **Update the version** in `pyproject.toml` to match the release tag
-3. **Publish the release** on GitHub
-4. **GitHub Actions** automatically runs tests and publishes to PyPI
+1. *Create a release* on GitHub with a version tag (e.g., `v0.1.18`)
+2. *Update the version* in `pyproject.toml` to match the release tag
+3. *Publish the release* on GitHub
+4. *GitHub Actions* automatically runs tests and publishes to PyPI
 
 ## Setup Requirements
 
@@ -40,25 +40,25 @@ Before creating a release:
 
 ## Creating a Release
 
-1. **Create a new release** on GitHub:
+1. *Create a new release* on GitHub:
    - Go to Releases → "Create a new release"
    - Tag version: `v0.1.18` (must match pyproject.toml version)
    - Release title: `Version 0.1.18`
    - Description: Add release notes
    - Check "Set as the latest release"
 
-2. **Publish the release** - This triggers the GitHub Actions workflow
+2. *Publish the release* - This triggers the GitHub Actions workflow
 
 ## Workflow Steps
 
 The publishing workflow (`publish.yml`) performs these steps:
 
-1. **Setup** - Installs Python and Poetry
-2. **Install dependencies** - Installs all project dependencies
-3. **Run tests** - Ensures all tests pass before publishing
-4. **Version check** - Verifies the release tag matches pyproject.toml version
-5. **Build package** - Creates distribution files
-6. **Publish to PyPI** - Uploads the package to PyPI
+1. *Setup* - Installs Python and Poetry
+2. *Install dependencies* - Installs all project dependencies
+3. *Run tests* - Ensures all tests pass before publishing
+4. *Version check* - Verifies the release tag matches pyproject.toml version
+5. *Build package* - Creates distribution files
+6. *Publish to PyPI* - Uploads the package to PyPI
 
 ## Troubleshooting
 
@@ -103,7 +103,7 @@ poetry publish
 ## Package Information
 
 The package is published as `pods` on PyPI:
-- **Package name**: `pods`
-- **Homepage**: https://github.com/lawrennd/ods
-- **Documentation**: Available through the GitHub repository
-- **License**: MIT 
+- *Package name*: `pods`
+- *Homepage*: https://github.com/lawrennd/ods
+- *Documentation*: Available through the GitHub repository
+- *License*: MIT 
