@@ -7,6 +7,10 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write  # For trusted publishing
     steps:
     - uses: actions/checkout@v4
     
@@ -32,7 +36,7 @@ jobs:
     
     - name: Check version matches release tag
       run: |
-        RELEASE_VERSION=${GITHUB_REF#refs/tags/}
+        RELEASE_VERSION=${GITHUB_REF#refs/tags/v}
         POETRY_VERSION=$(poetry version -s)
         if [ "$RELEASE_VERSION" != "$POETRY_VERSION" ]; then
           echo "Error: Release version $RELEASE_VERSION doesn't match Poetry version $POETRY_VERSION"
@@ -44,8 +48,18 @@ jobs:
       run: |
         poetry build
     
+    - name: Verify package contents
+      run: |
+        poetry run twine check dist/*
+    
     - name: Publish to PyPI
       env:
         POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
       run: |
-        poetry publish --no-interaction 
+        poetry publish --no-interaction
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: dist/ 

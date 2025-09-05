@@ -502,7 +502,7 @@
     },
     "olympic_marathon_men": {
         "citation": null,
-        "details": "Olympic mens' marathon gold medal winning times from 1896 to 2012. Time given in pace (minutes per kilometer). Data is originally downloaded and collated from Wikipedia, we are not responsible for errors in the data",
+        "details": "Olympic mens' marathon gold medal winning times from 1896 to 2024. Time given in pace (minutes per kilometer). Data is originally downloaded and collated from Wikipedia, we are not responsible for errors in the data",
         "files": [
             [
                 "olympicMarathonTimes.csv"

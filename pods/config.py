@@ -23,7 +23,8 @@ home = os.getenv("HOME") or os.getenv("USERPROFILE")
 user_file = os.path.join(home, ".ods_user.cfg")
 
 # Read in the given files.
-config.read_file(open(default_file))
+with open(default_file) as f:
+    config.read_file(f)
 config.read([local_file, user_file])
 if not config:
     raise ValueError(
