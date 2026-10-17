@@ -135,6 +135,24 @@ datasets:
   size: 1674161
   urls:
     - http://jura.wi.mit.edu/young_public/regulatory_network/
+- name: east_timor
+  citation: >-
+    Packaged for GPSS / GPy teaching labs by Max Zwiessele (historical host:
+    staffwww.dcs.shef.ac.uk). Upstream GIS / linguistic map source is undocumented;
+    this entry mirrors the teaching artifact as used historically. Do not treat
+    open Timor language polygon corpora (e.g. Glottography / Edwards 2020) as a
+    drop-in replacement without regenerating labels and documenting new credit.
+  details: >-
+    Binary language-region classification points for East Timor (Timor-Leste),
+    used in GPSS non-Gaussian likelihoods labs. Returns longitude/latitude
+    centroids X (67 x 2), binary labels Y (67 x 1), and polygon vertex lists for
+    map plotting. MD5 of EastTimor2.pickle: 16db10d067706fa3f03633408a8d201c.
+  files:
+    - [EastTimor2.pickle]
+  license: null
+  size: 4196387
+  urls:
+    - https://github.com/lawrennd/datasets_mirror/raw/main/east_timor/
 - name: epomeo_gpx
   citation: ""
   details: Five different GPS traces of the same run up Mount Epomeo in Ischia. The traces are from different sources. endomondo_1 and endomondo_2 are traces from the mobile phone app Endomondo, with a split in the middle. garmin_watch_via_endomondo is the trace from a Garmin watch, with a segment missing about 4 kilometers in. viewranger_phone and viewranger_tablet are traces from a phone and a tablet through the viewranger app. The viewranger_phone data comes from the same mobile phone as the Endomondo data (i.e. there are 3 GPS devices, but one device recorded two traces).

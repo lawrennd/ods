@@ -27,8 +27,8 @@ This task adds a first-class `pods.datasets.east_timor` that downloads from `dat
 ## Acceptance Criteria
 
 - [x] `EastTimor2.pickle` is published under `lawrennd/datasets_mirror/east_timor/`
-- [ ] `pods/data_resources.yml` (and `.json`) lists the dataset with mirror URL, citation, and file entry
-- [ ] `pods.datasets.east_timor` returns `X`, `Y`, and `polygons`
+- [x] `pods/data_resources.yml` (and `.json`) lists the dataset with mirror URL, citation, and file entry
+- [x] `pods.datasets.east_timor` returns `X`, `Y`, and `polygons`
 - [x] Snippet `_gp/includes/non-gaussian-gps.md` loads via `pods.datasets.east_timor()` (done; assumes pods API below)
 - [ ] GPSS notebook smoke / CI can run the East Timor cell without vendoring the pickle in `gpss` (after pods release + notebook rebuild)
 
