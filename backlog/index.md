@@ -40,10 +40,12 @@ This file provides an overview of all current backlog items organized by categor
 
 ### Ready
 
-- [Add East Timor language-regions dataset to pods](features/2026-10-17_east-timor-dataset.md)
+*No tasks currently ready.*
 
 
 ### In Progress
+
+- [Add East Timor language-regions dataset to pods](features/2026-10-17_east-timor-dataset.md)
 
 - [Modernize and Fix Test Infrastructure for ODS](features/2025-07-11_test-infrastructure.md)
 
