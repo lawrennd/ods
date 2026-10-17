@@ -459,9 +459,9 @@
 	    ]
 	],
 	"license": "",
-	"size": 0,
+	"size": 11136562,
 	"urls": [
-	    "https://energydata.info/dataset/f85d1796-e7f2-4630-be84-79420174e3bd/resource/6e640a13-cab4-457b-b9e6-0336051bac27/download/"
+	    "https://github.com/lawrennd/datasets_mirror/raw/main/nigeria_nmis/"
 	]
     },
     "olivetti_faces": {
@@ -574,7 +574,7 @@
         "license": "This data is licensed for Humanitarian use only.",
         "size": 6706778,
         "urls": [
-            "https://data.humdata.org/dataset/81ac1d38-f603-4a98-804d-325c658599a3/resource/0bc2f7bb-9ff6-40db-a569-1989b8ffd3bc/download/"
+            "https://github.com/lawrennd/datasets_mirror/raw/main/nigerian_administrative_zones/"
         ]
     },
    "nigerian_covid": {
@@ -602,7 +602,7 @@
         "license": null,
         "size": 11136562,
         "urls": [
-            "https://energydata.info/dataset/f85d1796-e7f2-4630-be84-79420174e3bd/resource/6e640a13-cab4-457b-b9e6-0336051bac27/download/"
+            "https://github.com/lawrennd/datasets_mirror/raw/main/nigeria_nmis/"
         ]
     },
    "nigerian_population": {
@@ -821,7 +821,7 @@
         "license": null,
         "size": 327496,
         "urls": [
-            "http://www.dcc.fc.up.pt/~ltorgo/Regression/"
+            "https://github.com/lawrennd/datasets_mirror/raw/main/elevators/"
         ]
     },
     "politics_twitter": {

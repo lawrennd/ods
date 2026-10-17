@@ -78,6 +78,8 @@ This file provides an overview of all current backlog items organized by categor
 
 ## Recently Completed Tasks
 
+- [Drop Python 3.9 support; keep unpinned Poetry in CI](infrastructure/2026-10-17_drop-python-3.9.md)
+
 - [Fix Broken Data URLs in Dataset Resources](bugs/2025-07-11_broken-data-urls.md)
 
 
