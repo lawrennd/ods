@@ -40,7 +40,7 @@ This file provides an overview of all current backlog items organized by categor
 
 ### Ready
 
-*No tasks currently ready.*
+- [Add East Timor language-regions dataset to pods](features/2026-10-17_east-timor-dataset.md)
 
 
 ### In Progress
