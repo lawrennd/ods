@@ -1740,6 +1740,33 @@ def xw_pen(data_set="xw_pen"):
     )
 
 
+def grid_corpus_vowels(data_set="grid_corpus_vowels"):
+    """Grid corpus vowel data modeled for synthesis by Jon Barker.
+    
+    33 context dependent vowel phones from 34 (mixed male/female) subjects.
+    Means and variances of synthesis HMM for subjects. For each context dependent phone: 
+    5 state HMM, one Gaussian component per state. 25 MFCC channels, with deltas and accelerations.
+    
+    Returns:
+        Dictionary containing the vowel data with keys for means, variances, and metadata.
+    """
+    if not access.data_available(data_set):
+        access.download_data(data_set)
+    
+    # Load the numpy archive file
+    data_file = os.path.join(access.DATAPATH, data_set, "grid_corpus_vowels.npz")
+    data = np.load(data_file)
+    
+    # Convert numpy archive to dictionary for easier access
+    data_dict = {}
+    for key in data.files:
+        data_dict[key] = data[key]
+    
+    return access.data_details_return(
+        data_dict, data_set
+    )
+
+
 def download_rogers_girolami_data(data_set="rogers_girolami_data"):
     if not access.data_available("rogers_girolami_data"):
         import tarfile

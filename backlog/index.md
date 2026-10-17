@@ -11,7 +11,7 @@ This file provides an overview of all current backlog items organized by categor
 
 ### In Progress
 
-*No tasks currently in progress.*
+*No tasks currently in_progress.*
 
 
 ### Proposed
@@ -28,7 +28,7 @@ This file provides an overview of all current backlog items organized by categor
 
 ### In Progress
 
-*No tasks currently in progress.*
+*No tasks currently in_progress.*
 
 
 ### Proposed
@@ -45,7 +45,7 @@ This file provides an overview of all current backlog items organized by categor
 
 ### In Progress
 
-*No tasks currently in progress.*
+- [Modernize and Fix Test Infrastructure for ODS](features/2025-07-11_test-infrastructure.md)
 
 
 ### Proposed
@@ -57,12 +57,16 @@ This file provides an overview of all current backlog items organized by categor
 
 ### Ready
 
-*No tasks currently ready.*
+- [Fix Data Format and Parsing Issues in Dataset Loading](bugs/2025-07-11_data-format-parsing-issues.md)
+
+- [Fix Test Framework Configuration and Fixture Issues](bugs/2025-07-11_test-framework-configuration.md)
+
+- [Fix Missing Dependencies in Test Suite](bugs/2025-07-11_test-dependency-issues.md)
 
 
 ### In Progress
 
-*No tasks currently in progress.*
+*No tasks currently in_progress.*
 
 
 ### Proposed
@@ -74,7 +78,7 @@ This file provides an overview of all current backlog items organized by categor
 
 ## Recently Completed Tasks
 
-*No tasks recently completed.*
+- [Fix Broken Data URLs in Dataset Resources](bugs/2025-07-11_broken-data-urls.md)
 
 
 ## Recently Abandoned Tasks

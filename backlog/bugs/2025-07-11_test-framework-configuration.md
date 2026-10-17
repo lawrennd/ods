@@ -1,19 +1,21 @@
 ---
-id: "2025-07-11_test-framework-configuration"
-title: "Fix Test Framework Configuration and Fixture Issues"
-status: "Ready"
-priority: "Medium"
-created: "2025-07-11"
-last_updated: "2025-07-11"
-owner: "Development Team"
-github_issue: ""
-dependencies: ""
+category: bugs
+created: '2025-07-11'
+dependencies: ''
+github_issue: ''
+id: 2025-07-11_test-framework-configuration
+last_updated: '2025-07-11'
+owner: Development Team
+priority: Medium
+related_cips: []
+status: Ready
 tags:
 - backlog
 - bugs
 - testing
 - pytest
 - fixtures
+title: Fix Test Framework Configuration and Fixture Issues
 ---
 
 # Task: Fix Test Framework Configuration and Fixture Issues
@@ -64,4 +66,4 @@ The `test_dataset_dimensions` function in `pods/testing/datasets_tests.py` is be
 ## Progress Updates
 
 ### 2025-07-11
-Task created to track test framework configuration issues identified in test suite analysis. 
+Task created to track test framework configuration issues identified in test suite analysis.

@@ -1,18 +1,20 @@
 ---
-id: "2025-07-11_test-dependency-issues"
-title: "Fix Missing Dependencies in Test Suite"
-status: "Ready"
-priority: "High"
-created: "2025-07-11"
-last_updated: "2025-07-11"
-owner: "Development Team"
-github_issue: ""
-dependencies: ""
+category: bugs
+created: '2025-07-11'
+dependencies: ''
+github_issue: ''
+id: 2025-07-11_test-dependency-issues
+last_updated: '2025-07-11'
+owner: Development Team
+priority: High
+related_cips: []
+status: Ready
 tags:
 - backlog
 - bugs
 - testing
 - dependencies
+title: Fix Missing Dependencies in Test Suite
 ---
 
 # Task: Fix Missing Dependencies in Test Suite
@@ -64,4 +66,4 @@ poetry install --with dev --extras "all-datasets"
 ## Progress Updates
 
 ### 2025-07-11
-Task created to track missing dependency issues identified in test suite analysis. 
+Task created to track missing dependency issues identified in test suite analysis.

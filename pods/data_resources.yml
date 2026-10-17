@@ -936,6 +936,17 @@ datasets:
     size: 7518372
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/twitter_data/'
+  - name: grid_corpus_vowels
+    citation: >-
+      Cooke, M., Barker, J., Cunningham, S., & Shao, X. (2006). An audio-visual corpus for speech perception and automatic speech recognition. Journal of the Acoustical Society of America, 120(5), 2421-2424. doi: 10.1121/1.2229005. Modelled for synthesis by Jon Barker.
+    details: >-
+      Grid corpus data modelled for synthesis by Jon Barker. 33 context dependent vowel phones from 34 (mixed male/female) subjects. Means and variances of synthesis HMM for subjects. For each context dependent phone: 5 state HMM, one Gaussian component per state. 25 MFCC channels, with deltas and accelerations. The Grid Corpus is a large multitalker audiovisual sentence corpus consisting of high-quality audio and video recordings of 1000 sentences spoken by each of 34 talkers (18 male, 16 female).
+    files:
+      - - grid_corpus_vowels.npz
+    license: Grid Corpus is freely available for research use. See http://spandh.dcs.shef.ac.uk/gridcorpus/ for more details.
+    size: 3937394
+    urls:
+      - 'https://github.com/lawrennd/datasets_mirror/raw/main/grid_corpus_vowels/'
   - name: kepler_telescope_base
     citation: ''
     details: >

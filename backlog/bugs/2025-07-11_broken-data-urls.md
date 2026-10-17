@@ -1,18 +1,20 @@
 ---
-id: "2025-07-11_broken-data-urls"
-title: "Fix Broken Data URLs in Dataset Resources"
-status: "Completed"
-priority: "Medium"
-created: "2025-07-11"
-last_updated: "2025-07-11"
-owner: "Development Team"
-github_issue: ""
-dependencies: ""
+category: bugs
+created: '2025-07-11'
+dependencies: ''
+github_issue: ''
+id: 2025-07-11_broken-data-urls
+last_updated: '2025-07-11'
+owner: Development Team
+priority: Medium
+related_cips: []
+status: Completed
 tags:
 - backlog
 - bugs
 - data-sources
 - urls
+title: Fix Broken Data URLs in Dataset Resources
 ---
 
 # Task: Fix Broken Data URLs in Dataset Resources
@@ -69,4 +71,4 @@ Task created to track broken data URLs identified in test suite analysis.
 - Updated `brendan_faces` URL to GitHub mirror
 - Updated `olivetti_faces` URL to GitHub mirror  
 - Updated `nigerian_population` URL to GitHub mirror
-- All three tests now pass: `test_brendan_faces_dimensions`, `test_olivetti_glasses_dimensions`, `test_nigerian_population_dimensions` 
+- All three tests now pass: `test_brendan_faces_dimensions`, `test_olivetti_glasses_dimensions`, `test_nigerian_population_dimensions`

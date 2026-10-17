@@ -1,17 +1,19 @@
 ---
-id: "2025-07-11_test-infrastructure"
-title: "Modernize and Fix Test Infrastructure for ODS"
-status: "In Progress"
-priority: "High"
-created: "2025-07-11"
-last_updated: "2025-07-11"
-owner: "Neil D. Lawrence"
-github_issue: ""
-dependencies: ""
+category: features
+created: '2025-07-11'
+dependencies: ''
+github_issue: ''
+id: 2025-07-11_test-infrastructure
+last_updated: '2025-07-11'
+owner: Neil D. Lawrence
+priority: High
+related_cips: []
+status: In Progress
 tags:
 - backlog
 - testing
 - infrastructure
+title: Modernize and Fix Test Infrastructure for ODS
 ---
 
 # Task: Modernize and Fix Test Infrastructure
@@ -56,4 +58,4 @@ Updated to In Progress status after implementing pytest migration:
 - Fixed binary compatibility issues with conda environment
 - Tests now run successfully with 25 passing tests
 - Remaining issues are missing optional dependencies and code compatibility fixes
-- Need to update documentation and fix remaining test failures 
+- Need to update documentation and fix remaining test failures

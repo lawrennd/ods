@@ -1,19 +1,21 @@
 ---
-id: "2025-07-11_data-format-parsing-issues"
-title: "Fix Data Format and Parsing Issues in Dataset Loading"
-status: "Ready"
-priority: "Medium"
-created: "2025-07-11"
-last_updated: "2025-07-11"
-owner: "Development Team"
-github_issue: ""
-dependencies: ""
+category: bugs
+created: '2025-07-11'
+dependencies: ''
+github_issue: ''
+id: 2025-07-11_data-format-parsing-issues
+last_updated: '2025-07-11'
+owner: Development Team
+priority: Medium
+related_cips: []
+status: Ready
 tags:
 - backlog
 - bugs
 - data-parsing
 - csv
 - yaml
+title: Fix Data Format and Parsing Issues in Dataset Loading
 ---
 
 # Task: Fix Data Format and Parsing Issues in Dataset Loading
@@ -69,4 +71,4 @@ Several datasets have data format and parsing issues that cause test failures. T
 ## Progress Updates
 
 ### 2025-07-11
-Task created to track data format and parsing issues identified in test suite analysis. 
+Task created to track data format and parsing issues identified in test suite analysis.
