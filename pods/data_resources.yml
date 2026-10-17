@@ -474,10 +474,10 @@ datasets:
     files:
       - - healthmopupandbaselinenmisfacility.csv
     license: ''
-    size: 0
+    size: 11136562
     urls:
       - >-
-        https://energydata.info/dataset/f85d1796-e7f2-4630-be84-79420174e3bd/resource/6e640a13-cab4-457b-b9e6-0336051bac27/download/
+        https://github.com/lawrennd/datasets_mirror/raw/main/nigeria_nmis/
   - name: olivetti_faces
     citation: >-
       Ferdinando Samaria and Andy Harter, Parameterisation of a Stochastic Model
@@ -601,7 +601,7 @@ datasets:
     size: 6706778
     urls:
       - >-
-        https://data.humdata.org/dataset/81ac1d38-f603-4a98-804d-325c658599a3/resource/0bc2f7bb-9ff6-40db-a569-1989b8ffd3bc/download/
+        https://github.com/lawrennd/datasets_mirror/raw/main/nigerian_administrative_zones/
   - name: nigerian_covid
     citation: >-
       Coronavirus COVID-19 (2019-nCoV) Data Repository for Africa. Vukosi
@@ -673,7 +673,7 @@ datasets:
     size: 11136562
     urls:
       - >-
-        https://github.com/lawrennd/datasets_mirror/raw/main/nigerian_population/
+        https://github.com/lawrennd/datasets_mirror/raw/main/nigeria_nmis/
   - name: nigerian_population
     citation: >-
       Nigeria - Subnational Population Statistics by administrative level 1 and
@@ -918,7 +918,7 @@ datasets:
     license: null
     size: 327496
     urls:
-      - 'http://www.dcc.fc.up.pt/~ltorgo/Regression/'
+      - 'https://github.com/lawrennd/datasets_mirror/raw/main/elevators/'
   - name: politics_twitter
     citation: >-
       Saul, A., Hensman, J., Vehtai, A., & Lawrence, N. D. (2016).  Chained
