@@ -148,6 +148,39 @@ def della_gatta_TRP63_gene_expression(data_set="della_gatta", gene_number=None):
     return access.data_details_return({"X": X, "Y": Y, "gene_number": gene_number}, data_set)
 
 
+def east_timor(data_set="east_timor"):
+    """East Timor binary language-region classification data for GP labs.
+
+    Returns centroids ``X`` (longitude/latitude), binary labels ``Y``, and
+    polygon vertex lists for map visualisation. Packaged for GPSS / GPy
+    teaching by Max Zwiessele; upstream GIS source is undocumented — see
+    ``data_resources`` citation. Mirrors the historical teaching pickle rather
+    than regenerating from open Timor language corpora.
+    """
+    import pickle
+
+    if not access.data_available(data_set):
+        access.download_data(data_set)
+    path = os.path.join(access.DATAPATH, data_set, "EastTimor2.pickle")
+    with open(path, "rb") as f:
+        try:
+            X, y, polygons = pickle.load(f, encoding="latin1")
+        except TypeError:
+            X, y, polygons = pickle.load(f)
+    return access.data_details_return(
+        {
+            "X": X,
+            "Y": y,
+            "polygons": polygons,
+            "info": (
+                "Binary language-region labels for East Timor regions with "
+                "map polygons; used in GPSS non-Gaussian likelihood labs."
+            ),
+        },
+        data_set,
+    )
+
+
 def epomeo_gpx(data_set="epomeo_gpx", sample_every=4):
     """Data set of three GPS traces of the same movement on Mt Epomeo in Ischia. Requires gpxpy to run."""
     try:
