@@ -9,6 +9,7 @@ datasets:
   size: 180913792
   urls:
     - https://github.com/lawrennd/datasets_mirror/raw/main/airline_delay/
+  original_urls: []
 - name: bmi_steps
   citation: A Hypothesis is a Liability. I. Yanai and M. Lercher
   details: Data for two genders of steps against BMI.
@@ -18,6 +19,7 @@ datasets:
   size: 18270
   urls:
     - https://github.com/lawrennd/datasets_mirror/raw/main/bmi_steps/
+  original_urls: []
 - name: ankur_pose_data
   citation: Agarwal, A. and Triggs, B. 'Recovering 3D Human Pose from Monocular Images', IEEE TPAMI vol 28(1), 44-58, 2006.
   details: The Agarwal and Triggs pose data provides artificially generated silhouettes alongside motion capture positions for a range of poses.
@@ -27,6 +29,7 @@ datasets:
   size: 2802667
   urls:
     - https://github.com/lawrennd/datasets_mirror/raw/main/ankur_pose_data/
+  original_urls: []
 - name: boston_housing
   citation: Harrison, D. and Rubinfeld, D.L. 'Hedonic prices and the demand for clean air', J. Environ. Economics & Management, vol.5, 81-102, 1978.
   details: The Boston Housing data relates house values in Boston to a range of input variables.
@@ -45,6 +48,7 @@ datasets:
   size: 46779
   urls:
     - https://github.com/lawrennd/datasets_mirror/raw/main/boxjenkins_airline/
+  original_urls: []
 - name: brendan_faces
   citation: Frey, B. J., Colmenarez, A and Huang, T. S. Mixtures of Local Linear Subspaces for Face Recognition. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition 1998, 32-37, June 1998. Computer Society Press, Los Alamitos, CA.
   details: A video of Brendan Frey's face popularized as a benchmark for visualization by the Locally Linear Embedding.
@@ -54,6 +58,8 @@ datasets:
   size: 1100584
   urls:
     - https://github.com/lawrennd/datasets_mirror/raw/main/brendan_faces/
+  original_urls:
+    - http://www.cs.nyu.edu/~roweis/data/
 - name: ceres
   citation: Monatlicher Correspondenz September 1801. Franz von Zach (editor). Summary of data from a Letter of Giuseppe Piazzi.
   details: Twenty two celestial observations of the dwarf planet Ceres as observed by Giuseppe Piazzi from his Palermo observatory from January 1st to February 11th 1801. Transcribed (perhaps with errors) by Neil Lawrence.
@@ -63,6 +69,7 @@ datasets:
   size: 2044
   urls:
     - https://github.com/lawrennd/datasets_mirror/raw/main/ceres/
+  original_urls: []
 - name: cifar-10
   citation: 'Learning Multiple Layers of Features from Tiny Images, Alex Krizhevsky, 2009, Tech report available here: http://www.cs.toronto.edu/~kriz/learning-features-2009-TR.pdf'
   details: 'The CIFAR-10 and CIFAR-100 are labeled subsets of the 80 million tiny images dataset. They were collected by Alex Krizhevsky, Vinod Nair, and Geoffrey Hinton. Details are available on this webpage: http://www.cs.toronto.edu/~kriz/cifar.html. The CIFAR-10 dataset consists of 60000 32x32 colour images in 10 classes, with 6000 images per class. There are 50000 training images and 10000 test images.'
@@ -99,6 +106,7 @@ datasets:
   size: 2031872
   urls:
     - https://github.com/lawrennd/datasets_mirror/raw/main/decampos_digits/
+  original_urls: []
 - name: della_gatta
   citation: Direct targets of the TRP63 transcription factor revealed by a combination of gene expression profiling and reverse engineering. Giusy Della Gatta, Mukesh Bansal, Alberto Ambesi-Impiombato, Dario Antonini, Caterina Missero, and Diego di Bernardo, Genome Research 2008
   details: The full gene expression data set from della Gatta et al (http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2413161/) processed by RMA.
@@ -108,6 +116,7 @@ datasets:
   size: 3729650
   urls:
     - https://github.com/lawrennd/datasets_mirror/raw/main/della_gatta/
+  original_urls: []
 - name: drosophila_protein
   citation: 'Becker K, Balsa-Canto E, Cicin-Sain D, Hoermann A, Janssens H, et al. (2013) Reverse-Engineering Post-Transcriptional Regulation of Gap Genes in Drosophila melanogaster. PLoS Comput Biol 9(10): e1003281. doi:10.1371/journal.pcbi.1003281'
   details: Expression of the gap genes Krüppel, knirps, and giant in Drosophila melanogaster. Data includes quantitative datasets of gap gene mRNA and protein expression to solve and fit a model of post-transcriptional regulation, and establish its structural and practical identifiability
@@ -117,6 +126,7 @@ datasets:
   size: 20258
   urls:
     - https://github.com/lawrennd/datasets_mirror/raw/main/drosophila_protein/
+  original_urls: []
 - name: spellman_yeast
   citation: Paul T. Spellman, Gavin Sherlock, Michael Q. Zhang, Vishwanath R. Iyer, Kirk Anders, Michael B. Eisen, Patrick O. Brown, David Botstein, and Bruce Futcher 'Comprehensive Identification of Cell Cycle-regulated Genes of the Yeast Saccharomyces cerevisiae by Microarray Hybridization.'  Molecular Biology of the Cell 9, 3273-3297
   details: Two colour spotted cDNA array data set of a series of experiments to identify which genes in Yeast are cell cycle regulated.
@@ -126,6 +136,8 @@ datasets:
   size: 2510955
   urls:
     - https://github.com/lawrennd/datasets_mirror/raw/main/spellman_yeast/
+  original_urls:
+    - http://genome-www.stanford.edu/cellcycle/data/rawdata/
 - name: lee_yeast_ChIP
   citation: 'Tong Ihn Lee, Nicola J. Rinaldi, Francois Robert, Duncan T. Odom, Ziv Bar-Joseph, Georg K. Gerber, Nancy M. Hannett, Christopher T. Harbison, Craig M. Thompson, Itamar Simon, Julia Zeitlinger, Ezra G. Jennings, Heather L. Murray, D. Benjamin Gordon, Bing Ren, John J. Wyrick, Jean-Bosco Tagne, Thomas L. Volkert, Ernest Fraenkel, David K. Gifford, Richard A. Young ''Transcriptional Regulatory Networks in Saccharomyces cerevisiae'' Science 298 (5594) pg 799--804. DOI: 10.1126/science.1075090'
   details: Binding location analysis for 106 regulators in yeast. The data consists of p-values for binding of regulators to genes derived from ChIP-chip experiments.
@@ -153,6 +165,8 @@ datasets:
   size: 4196387
   urls:
     - https://github.com/lawrennd/datasets_mirror/raw/main/east_timor/
+  original_urls:
+    - http://staffwww.dcs.shef.ac.uk/people/M.Zwiessele/gpss/lab2/
 - name: epomeo_gpx
   citation: ""
   details: Five different GPS traces of the same run up Mount Epomeo in Ischia. The traces are from different sources. endomondo_1 and endomondo_2 are traces from the mobile phone app Endomondo, with a split in the middle. garmin_watch_via_endomondo is the trace from a Garmin watch, with a segment missing about 4 kilometers in. viewranger_phone and viewranger_tablet are traces from a phone and a tablet through the viewranger app. The viewranger_phone data comes from the same mobile phone as the Endomondo data (i.e. there are 3 GPS devices, but one device recorded two traces).
@@ -162,6 +176,7 @@ datasets:
   size: 2031872
   urls:
     - https://github.com/lawrennd/datasets_mirror/raw/main/epomeo_gpx/
+  original_urls: []
 - name: football_data
   citation: ""
   details: Results of English football matches since 1993/94 season.
@@ -171,6 +186,8 @@ datasets:
   size: 1
   urls:
     - http://github.com/lawrennd/datasets_mirror/raw/main/football_data/
+  original_urls:
+    - http://www.football-data.co.uk/mmz4281/
 - name: fruitfly_tomancak
   citation: ""
   details: ""
@@ -180,6 +197,7 @@ datasets:
   size: 59000000
   urls:
     - https://github.com/lawrennd/datasets_mirror/raw/main/fruitfly_tomancak/
+  original_urls: []
 - name: fruitfly_tomancak_cel_files
   citation: '''Systematic determination of patterns of gene expression during Drosophila embryogenesis'' Pavel Tomancak, Amy Beaton, Richard Weiszmann, Elaine Kwan, ShengQiang Shu, Suzanna E Lewis, Stephen Richards, Michael Ashburner, Volker Hartenstein, Susan E Celniker, and Gerald M Rubin'
   details: Gene expression results from blastoderm development in Drosophila Melanogaster.
@@ -294,6 +312,7 @@ datasets:
     size: 0
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/hospitalized_covid/'
+    original_urls: []
   - name: isomap_face_data
     citation: >-
       A Global Geometric Framework for Nonlinear Dimensionality Reduction, J. B.
@@ -309,6 +328,7 @@ datasets:
     size: 24229368
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/isomap_face_data/'
+    original_urls: []
   - name: mauna_loa
     citation: >-
       Mauna Loa Data. Dr. Pieter Tans, NOAA/ESRL
@@ -496,6 +516,8 @@ datasets:
     urls:
       - >-
         https://github.com/lawrennd/datasets_mirror/raw/main/nigeria_nmis/
+    original_urls:
+      - https://energydata.info/dataset/f85d1796-e7f2-4630-be84-79420174e3bd/resource/6e640a13-cab4-457b-b9e6-0336051bac27/download/
   - name: olivetti_faces
     citation: >-
       Ferdinando Samaria and Andy Harter, Parameterisation of a Stochastic Model
@@ -514,6 +536,8 @@ datasets:
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/'
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/'
+    original_urls:
+      - http://www.cs.nyu.edu/~roweis/data/
   - name: olivetti_glasses
     citation: Information recorded in olivetti_faces entry. Should be used from there.
     details: Information recorded in olivetti_faces entry. Should be used from there.
@@ -525,6 +549,8 @@ datasets:
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/'
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/olivetti_faces/'
+    original_urls:
+      - http://www.cs.nyu.edu/~roweis/data/
   - name: olympic_marathon_men
     citation: null
     details: >-
@@ -538,6 +564,7 @@ datasets:
     urls:
       - >-
         https://github.com/lawrennd/datasets_mirror/raw/main/olympic_marathon_men/
+    original_urls: []
   - name: osu_accad
     citation: >-
       The Open Motion Data Project by The Ohio State University Advanced
@@ -570,6 +597,8 @@ datasets:
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/osu_accad/'
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/stick/'
+    original_urls:
+      - http://accad.osu.edu/research/mocap/data/
   - name: osu_run1
     citation: >
       The Open Motion Data Project by The Ohio State University Advanced
@@ -589,6 +618,8 @@ datasets:
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/osu_accad/'
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/stick/'
+    original_urls:
+      - http://accad.osu.edu/research/mocap/data/
   - name: nigerian_administrative_zones
     citation: >-
       Nigeria - Subnational Administrative Boundaries. February 23, 2017. Office
@@ -620,6 +651,8 @@ datasets:
     urls:
       - >-
         https://github.com/lawrennd/datasets_mirror/raw/main/nigerian_administrative_zones/
+    original_urls:
+      - https://data.humdata.org/dataset/81ac1d38-f603-4a98-804d-325c658599a3/resource/0bc2f7bb-9ff6-40db-a569-1989b8ffd3bc/download/
   - name: nigerian_covid
     citation: >-
       Coronavirus COVID-19 (2019-nCoV) Data Repository for Africa. Vukosi
@@ -692,6 +725,8 @@ datasets:
     urls:
       - >-
         https://github.com/lawrennd/datasets_mirror/raw/main/nigeria_nmis/
+    original_urls:
+      - https://energydata.info/dataset/f85d1796-e7f2-4630-be84-79420174e3bd/resource/6e640a13-cab4-457b-b9e6-0336051bac27/download/
   - name: nigerian_population
     citation: >-
       Nigeria - Subnational Population Statistics by administrative level 1 and
@@ -710,6 +745,8 @@ datasets:
     urls:
       - >-
         https://data.humdata.org/dataset/a7c3de5e-ff27-4746-99cd-05f2ad9b1066/resource/d9fc551a-b5e4-4bed-9d0d-b047b6961817/download/
+    original_urls:
+      - https://data.humdata.org/dataset/a7c3de5e-ff27-4746-99cd-05f2ad9b1066/resource/d9fc551a-b5e4-4bed-9d0d-b047b6961817/download/
   - name: pmlr
     citation: >-
       Proceedings of Machine Learning Research hosted at
@@ -775,6 +812,7 @@ datasets:
     size: 284390
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/robot_wireless/'
+    original_urls: []
   - name: rogers_girolami_data
     citation: >-
       A First Course in Machine Learning. Simon Rogers and Mark Girolami:
@@ -848,6 +886,7 @@ datasets:
     size: 0
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/sod1_mouse/'
+    original_urls: []
   - name: swiss_roll
     citation: >-
       A Global Geometric Framework for Nonlinear Dimensionality Reduction, J. B.
@@ -883,6 +922,7 @@ datasets:
     urls:
       - >-
         https://github.com/lawrennd/datasets_mirror/raw/main/three_phase_oil_flow/
+    original_urls: []
   - name: xw_pen
     citation: >-
       Michael E. Tipping and Neil D. Lawrence. Variational inference for
@@ -895,6 +935,7 @@ datasets:
     size: 3410
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/xw_pen/'
+    original_urls: []
   - name: leukemia
     citation: >-
       Henderson, R., Shimakura, S., and Gorst, D. (2002).  Modeling spatial
@@ -909,6 +950,8 @@ datasets:
     size: 65354
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/leukemia_survival/'
+    original_urls:
+      - http://www.math.ntnu.no/%7Ehrue/r-inla.org/examples/leukemia/
   - name: mcycle
     citation: >-
       Some Aspects of the Spline Smoothing Approach to Non-Parametric Regression
@@ -937,6 +980,8 @@ datasets:
     size: 327496
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/elevators/'
+    original_urls:
+      - http://www.dcc.fc.up.pt/~ltorgo/Regression/
   - name: politics_twitter
     citation: >-
       Saul, A., Hensman, J., Vehtai, A., & Lawrence, N. D. (2016).  Chained
@@ -954,6 +999,7 @@ datasets:
     size: 7518372
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/twitter_data/'
+    original_urls: []
   - name: grid_corpus_vowels
     citation: >-
       Cooke, M., Barker, J., Cunningham, S., & Shao, X. (2006). An audio-visual corpus for speech perception and automatic speech recognition. Journal of the Acoustical Society of America, 120(5), 2421-2424. doi: 10.1121/1.2229005. Modelled for synthesis by Jon Barker.
@@ -965,6 +1011,7 @@ datasets:
     size: 3937394
     urls:
       - 'https://github.com/lawrennd/datasets_mirror/raw/main/grid_corpus_vowels/'
+    original_urls: []
   - name: kepler_telescope_base
     citation: ''
     details: >
