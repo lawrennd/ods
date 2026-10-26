@@ -297,6 +297,26 @@
             "http://www.football-data.co.uk/mmz4281/"
         ]
     },
+    "uk_apartments": {
+        "citation": "J. Hensman, N. Fusi and N. D. Lawrence, Gaussian Processes for Big Data, UAI 2013, §4.2. Contains HM Land Registry data © Crown copyright and database right 2012–2013.",
+        "details": "Contemporaneous monthly HM Land Registry Price Paid releases, February 2012–September 2013, mirrored from the Internet Archive and the UK Government Web Archive. pods.datasets.uk_apartments(start, end) downloads the requested lodgement months (default February–October 2012, as in Hensman, Fusi and Lawrence 2013) and lets the caller choose property type and record-status filters. These are the original monthly publications, not a later yearly snapshot and not a geocoded extract.",
+        "files": [
+            [
+                "2012-02.csv"
+            ]
+        ],
+        "license": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+        "size": 1,
+        "urls": [
+            "https://github.com/lawrennd/datasets_mirror/raw/main/uk_apartments/"
+        ],
+        "original_urls": [
+            "http://data.gov.uk/dataset/land-registry-monthly-price-paid-data",
+            "http://www.landregistry.gov.uk/__data/assets/file/",
+            "https://web.archive.org/web/",
+            "https://webarchive.nationalarchives.gov.uk/ukgwa/"
+        ]
+    },
     "fruitfly_tomancak": {
         "citation": "",
         "details": "",
