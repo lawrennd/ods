@@ -533,6 +533,163 @@ def football_data(season="1617", data_set="football_data"):
     )
 
 
+UK_APARTMENTS_MONTHS = ["2012-{0:02d}".format(m) for m in range(2, 13)] + [
+    "2013-{0:02d}".format(m) for m in range(1, 10)
+]
+_UK_APARTMENTS_PPD15 = [
+    "id",
+    "price",
+    "date",
+    "postcode",
+    "ptype",
+    "new_build",
+    "tenure",
+    "paon",
+    "saon",
+    "street",
+    "locality",
+    "town",
+    "district",
+    "county",
+    "record_status",
+]
+_UK_APARTMENTS_PPD16 = _UK_APARTMENTS_PPD15[:-1] + ["ppd_category", "record_status"]
+
+
+def _uk_apartments_month_range(start, end):
+    """Return available YYYY-MM keys from start through end inclusive."""
+    if start not in UK_APARTMENTS_MONTHS or end not in UK_APARTMENTS_MONTHS:
+        raise ValueError(
+            "start and end must be YYYY-MM in {0} .. {1}; got {2!r}, {3!r}".format(
+                UK_APARTMENTS_MONTHS[0], UK_APARTMENTS_MONTHS[-1], start, end
+            )
+        )
+    i0 = UK_APARTMENTS_MONTHS.index(start)
+    i1 = UK_APARTMENTS_MONTHS.index(end)
+    if i1 < i0:
+        raise ValueError("end {0!r} is before start {1!r}".format(end, start))
+    return UK_APARTMENTS_MONTHS[i0 : i1 + 1]
+
+
+def _read_monthly_ppd(path):
+    """Read one contemporaneous monthly Price Paid CSV (15 or 16 columns)."""
+    df = pd.read_csv(
+        path,
+        encoding="latin-1",
+        header=None,
+        dtype=str,
+        keep_default_na=False,
+    )
+    if df.empty:
+        raise ValueError("{0} is empty".format(path))
+    first = str(df.iloc[0, 0])
+    if not first.startswith("{"):
+        df = df.iloc[1:].reset_index(drop=True)
+    ncols = df.shape[1]
+    if ncols == 15:
+        df.columns = _UK_APARTMENTS_PPD15
+        df["ppd_category"] = ""
+    elif ncols >= 16:
+        names = list(_UK_APARTMENTS_PPD16) + [
+            "extra_{0}".format(i) for i in range(ncols - 16)
+        ]
+        df.columns = names
+        df = df[list(_UK_APARTMENTS_PPD16)]
+    else:
+        raise ValueError(
+            "{0} has {1} columns; expected 15 or 16 Price Paid fields".format(
+                path, ncols
+            )
+        )
+    price = (
+        df["price"]
+        .str.replace("£", "", regex=False)
+        .str.replace(",", "", regex=False)
+        .str.strip()
+    )
+    df["price"] = pd.to_numeric(price, errors="coerce")
+    df["date"] = pd.to_datetime(df["date"], dayfirst=True, errors="coerce")
+    return df
+
+
+def uk_apartments(
+    start="2012-02",
+    end="2012-10",
+    property_type="F",
+    record_status=None,
+    data_set="uk_apartments",
+):
+    """Monthly HM Land Registry Price Paid files, February 2012–September 2013.
+
+    Downloads the contemporaneous monthly releases (not the later yearly
+    ``pp-YYYY.csv`` snapshot) from ``datasets_mirror``, analogous to
+    ``football_data`` selecting a season. Default ``start``/``end`` is the
+    February–October 2012 window used by Hensman, Fusi and Lawrence (2013).
+
+    Parameters
+    ----------
+    start, end : str
+        Inclusive lodgement-month bounds as ``YYYY-MM``.
+    property_type : str or None
+        Price Paid property-type code. ``"F"`` keeps flats/maisonettes
+        (the paper's apartment filter). ``None`` keeps all types.
+    record_status : str or None
+        Monthly files include A/C/D. ``None`` keeps all; ``"A"`` keeps
+        additions only.
+
+    Returns a dict with ``Y`` (price), ``logY``, the filtered ``frame``,
+    and the months used. Postcode geocoding is left to the caller; the
+    2013 experiment used a contemporaneous postcode directory that is
+    not in this mirror.
+    """
+    months = _uk_apartments_month_range(start, end)
+    by_year = {}
+    for month in months:
+        by_year.setdefault(month[:4], []).append(month)
+
+    frames = []
+    for year, year_months in by_year.items():
+        data_set_year = data_set + "_" + year
+        access.data_resources[data_set_year] = copy.deepcopy(
+            access.data_resources[data_set]
+        )
+        access.data_resources[data_set_year]["urls"][0] += "monthly_{0}/".format(year)
+        files = [month + ".csv" for month in year_months]
+        access.data_resources[data_set_year]["files"] = [files]
+        if not access.data_available(data_set_year):
+            access.download_data(data_set_year)
+        for filename in files:
+            path = os.path.join(access.DATAPATH, data_set_year, filename)
+            frames.append(_read_monthly_ppd(path))
+
+    df = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+    if property_type:
+        df = df[df["ptype"].str.upper() == str(property_type).upper()].copy()
+    if record_status:
+        df = df[df["record_status"].str.upper() == str(record_status).upper()].copy()
+
+    price = df["price"].to_numpy(dtype=float) if len(df) else np.array([], dtype=float)
+    y = price[:, None] if price.ndim == 1 else price
+    with np.errstate(divide="ignore", invalid="ignore"):
+        logy = np.log(y)
+    return access.data_details_return(
+        {
+            "Y": y,
+            "logY": logy,
+            "frame": df.reset_index(drop=True),
+            "months": months,
+            "property_type": property_type,
+            "record_status": record_status,
+            "info": (
+                "Contemporaneous monthly Price Paid rows for lodgement months "
+                "{0}–{1}. Geocoding (latitude/longitude) is not applied; "
+                "supply a postcode directory if you need the 2013 GP inputs."
+            ).format(start, end),
+        },
+        data_set,
+    )
+
+
 def sod1_mouse(data_set="sod1_mouse"):
     if not access.data_available(data_set):
         access.download_data(data_set)
