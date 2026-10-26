@@ -50,10 +50,11 @@ def list_datasets(module):
 
     l = []
     for a in dir(module):
+        if a.startswith("_") or a in dataset_helpers:
+            continue
         func = module.__dict__.get(a)
-        if a not in dataset_helpers:
-            if isinstance(func, types.FunctionType):
-                l.append((a, func))
+        if isinstance(func, types.FunctionType):
+            l.append((a, func))
     return l
 
 
