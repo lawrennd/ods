@@ -1,0 +1,24 @@
+# ods CIP-0003 demo: catalogue first, then named dataset (bmi_steps).
+# Requires lynguine with CIP-0009 materialise + remote.type: data_resources
+# (see lawrennd/lynguine#76).
+#
+# Stage A — materialise the pods catalogue onto disk.
+# Stage B — expand bmi_steps from that local catalogue, then read CSV.
+
+cache:
+  type: json
+  filename: data_resources.json
+  directory: .lynguine-cache/pods-catalogue
+  remote:
+    type: url
+    url: https://raw.githubusercontent.com/lawrennd/ods/main/pods/data_resources.json
+
+input:
+  type: csv
+  filename: steps-bmi-data.csv
+  directory: .lynguine-cache/bmi_steps
+  header: 0
+  remote:
+    type: data_resources
+    catalogue: .lynguine-cache/pods-catalogue/data_resources.json
+    name: bmi_steps

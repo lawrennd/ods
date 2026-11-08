@@ -35,7 +35,9 @@ Each CIP can have one of the following statuses:
 
 ## Current CIPs
 
-- [CIP-0001](./cip0001.md): 
+- [CIP-0001](./cip0001.md): Comprehensive Test Suite Improvement and Fixes
+- [CIP-0002](./cip0002.md): Sphinx Documentation and GitHub Workflow
+- [CIP-0003](./cip0003.md): Pods dataset access via lynguine materialise (In Progress)
 
 ## Creating a Good CIP
 
