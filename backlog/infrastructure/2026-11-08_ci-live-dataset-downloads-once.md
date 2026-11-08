@@ -29,7 +29,10 @@ version-specific loader behaviour — the loaders are effectively
 version-agnostic once imports succeed.
 
 Triggered by PR #7 CI: an early `xw_pen` fetch hit HTTP 504 on one matrix
-cell while the same dataset later passed on another job.
+cell while the same dataset later passed on another job. A later run failed
+on `pmlr` (HTTP 503 from `proceedings.mlr.press`) while downloading many
+volumes — `pmlr` defaults to `volumes="all"`, so the auto dimension sweep
+is especially brittle.
 
 Keep multi-version coverage for cheap tests (imports, `access_tests`,
 mocked paths). Run the live network dimension suite on a single matrix

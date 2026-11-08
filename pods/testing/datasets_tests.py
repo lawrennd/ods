@@ -43,6 +43,13 @@ dataset_helpers = [
     "prompt_stdin",
 ]
 
+# Datasets excluded from the auto-generated default-arg dimension sweep.
+# ``pmlr`` defaults to volumes="all" and hammers proceedings.mlr.press for
+# every volume (transient 5xx noise in CI). Covered separately with one volume.
+dataset_dimension_skip = {
+    "pmlr",
+}
+
 
 def list_datasets(module):
     """List all available datasets names and calling functions."""
@@ -63,6 +70,8 @@ negative_return_values = ["N", "n", "No", "NO", "no", "nO", "eggs"]
 
 dataset_test = []
 for name, func in list_datasets(pods.datasets):
+    if name in dataset_dimension_skip:
+        continue
     dataset_test.append(
         {
             "dataset_name": name,
@@ -121,6 +130,14 @@ for dataset in dataset_test:
     )
     globals()[_name] = _fn
 del _name, _fn, dataset
+
+
+def test_pmlr_dimensions_single_volume():
+    """Smoke-test pmlr with one volume (not volumes='all')."""
+    with mock.patch("builtins.input", return_value="Y"):
+        d = pods.datasets.pmlr(volumes=[316])
+    assert "Y" in d
+    assert len(d["Y"]) > 0
 
 
 class DatasetsTests(unittest.TestCase):
