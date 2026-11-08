@@ -106,15 +106,21 @@ def _test_dataset_dimensions(dataset_name, dataset_function, arg=None):
         assert len(d["response"]) == d["Y"].shape[1]
 
 
-# Generate test functions for each dataset
+# Generate test functions for each dataset.
+# Use a non-test_* temporary name so pytest does not collect the leftover
+# loop binding as an extra case (previously ``test_func`` re-ran the last
+# dataset — often ``xw_pen`` — and failed independently of the named test).
 for dataset in dataset_test:
-    test_name = f"test_{dataset['dataset_name']}_dimensions"
-    test_func = lambda d=dataset: _test_dataset_dimensions(
+    _name = f"test_{dataset['dataset_name']}_dimensions"
+    _fn = lambda d=dataset: _test_dataset_dimensions(
         d["dataset_name"], d["dataset_function"], d["arg"]
     )
-    test_func.__name__ = test_name
-    test_func.__doc__ = f"datasets_tests: Test function pods.datasets.{dataset['dataset_name']}"
-    globals()[test_name] = test_func
+    _fn.__name__ = _name
+    _fn.__doc__ = (
+        f"datasets_tests: Test function pods.datasets.{dataset['dataset_name']}"
+    )
+    globals()[_name] = _fn
+del _name, _fn, dataset
 
 
 class DatasetsTests(unittest.TestCase):
