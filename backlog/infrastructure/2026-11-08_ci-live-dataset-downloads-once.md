@@ -5,7 +5,6 @@ status: "Proposed"
 priority: "High"
 created: "2026-11-08"
 last_updated: "2026-11-08"
-# note: cross-link to weekly pmlr sweep added same day after ods#7
 category: "infrastructure"
 related_cips: []
 owner: "Neil D. Lawrence"
