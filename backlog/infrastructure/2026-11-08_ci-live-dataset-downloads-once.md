@@ -65,6 +65,8 @@ cell only.
 - Trigger: https://github.com/lawrennd/ods/actions/runs/42477991590
   (`xw_pen` 504 on matrix); discussion after ods#7
 - Sibling: `2026-11-08_bump-python-floor-3.11` (separate; do not couple)
+- Sibling: `2026-11-08_weekly-pmlr-full-volume-sweep` (full
+  `pmlr(volumes="all")` on a weekly schedule, not on PR CI)
 
 ## Progress Updates
 
