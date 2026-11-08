@@ -37,6 +37,8 @@ This file provides an overview of all current backlog items organized by categor
 
 - [Bump supported Python floor from 3.10 to 3.11](infrastructure/2026-11-08_bump-python-floor-3.11.md)
 
+- [Scheduled weekly full pmlr volumes=all download check](infrastructure/2026-11-08_weekly-pmlr-full-volume-sweep.md)
+
 
 ## Features
 
