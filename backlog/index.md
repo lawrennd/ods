@@ -33,7 +33,9 @@ This file provides an overview of all current backlog items organized by categor
 
 ### Proposed
 
-*No tasks currently proposed.*
+- [CI: run live dataset URL downloads on one Python only](infrastructure/2026-11-08_ci-live-dataset-downloads-once.md)
+
+- [Bump supported Python floor from 3.10 to 3.11](infrastructure/2026-11-08_bump-python-floor-3.11.md)
 
 
 ## Features
