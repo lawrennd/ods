@@ -1,25 +1,35 @@
 # Publishing to PyPI
 
-This repository is configured to automatically publish to PyPI when a new release is created on GitHub.
+This repository is configured to automatically publish to PyPI when a new release is created on GitHub. Packaging uses [uv](https://docs.astral.sh/uv/).
 
 ## How it works
 
 1. *Create a release* on GitHub with a version tag (e.g., `v0.1.18`)
 2. *Update the version* in `pyproject.toml` to match the release tag
 3. *Publish the release* on GitHub
-4. *GitHub Actions* automatically runs tests and publishes to PyPI
+4. *GitHub Actions* automatically runs tests and publishes to PyPI via `uv publish`
 
 ## Setup Requirements
 
-### 1. PyPI API Token
+### 1. Publishing authentication
 
-You need to create a PyPI API token and add it to your GitHub repository secrets:
+**Preferred: Trusted Publishing (OIDC)** — no API token secret required.
+
+1. On PyPI, open the `pods` project → Settings → Publishing
+2. Add a GitHub Actions publisher with:
+   - Owner: `lawrennd`
+   - Repository: `ods`
+   - Workflow: `publish.yml`
+   - Environment: `release` (must match `.github/workflows/publish.yml`)
+3. Ensure the GitHub repo has an Environment named `release`
+
+The publish job already sets `permissions.id-token: write` and `environment: release` so `uv publish` can use OIDC.
+
+**Fallback: API token** — reuse the existing repo secret `PYPI_API_TOKEN` (mapped to `UV_PUBLISH_TOKEN` in the workflow). You do not need a new secret name for the uv migration. Create or rotate the token only if publishing fails and Trusted Publishing is not configured:
 
 1. Go to [PyPI Account Settings](https://pypi.org/manage/account/)
-2. Create an API token with "Entire account" scope
-3. Copy the token
-4. Go to your GitHub repository → Settings → Secrets and variables → Actions
-5. Create a new secret named `PYPI_API_TOKEN` with the PyPI token value
+2. Create an API token
+3. Store it as GitHub Actions secret `PYPI_API_TOKEN`
 
 ### 2. Version Management
 
@@ -27,7 +37,7 @@ Before creating a release:
 
 1. Update the version in `pyproject.toml`:
    ```toml
-   [tool.poetry]
+   [project]
    version = "0.1.18"  # Match your release tag
    ```
 
@@ -53,26 +63,35 @@ Before creating a release:
 
 The publishing workflow (`publish.yml`) performs these steps:
 
-1. *Setup* - Installs Python and Poetry
-2. *Install dependencies* - Installs all project dependencies
+1. *Setup* - Installs uv and the project environment
+2. *Install dependencies* - `uv sync --frozen --group dev --all-extras`
 3. *Run tests* - Ensures all tests pass before publishing
-4. *Version check* - Verifies the release tag matches pyproject.toml version
-5. *Build package* - Creates distribution files
-6. *Publish to PyPI* - Uploads the package to PyPI
+4. *Version check* - Verifies the release tag matches `[project].version`
+5. *Build package* - `uv build`
+6. *Publish to PyPI* - `uv publish` (OIDC Trusted Publishing, with `PYPI_API_TOKEN` as fallback)
+
+## Local development
+
+```bash
+# Install uv: https://docs.astral.sh/uv/getting-started/installation/
+uv sync --group dev --all-extras
+uv run pytest
+uv build
+```
 
 ## Troubleshooting
 
 ### Version Mismatch Error
 
-If you see "Release version doesn't match Poetry version":
+If you see "Release version doesn't match project version":
 - Ensure the version in `pyproject.toml` matches your release tag
 - The release tag should be `v0.1.18` and pyproject.toml should have `version = "0.1.18"`
 
 ### PyPI Authentication Error
 
 If you see authentication errors:
-- Verify the `PYPI_API_TOKEN` secret is set correctly in GitHub
-- Ensure the token has the correct permissions on PyPI
+- Confirm the Trusted Publisher on PyPI matches `publish.yml` and environment `release`
+- Or verify the `PYPI_API_TOKEN` secret is set and valid
 - Check that the token hasn't expired
 
 ### Test Failures
@@ -84,20 +103,12 @@ If tests fail during the publishing workflow:
 
 ## Manual Publishing (if needed)
 
-If you need to publish manually:
-
 ```bash
-# Install dependencies
-poetry install --with dev
-
-# Run tests
-poetry run pytest
-
-# Build package
-poetry build
-
-# Publish (requires PyPI token)
-poetry publish
+uv sync --group dev --all-extras
+uv run pytest
+uv build
+# Local publish needs a token (Trusted Publishing is CI-only):
+UV_PUBLISH_TOKEN=pypi-... uv publish
 ```
 
 ## Package Information
@@ -106,4 +117,4 @@ The package is published as `pods` on PyPI:
 - *Package name*: `pods`
 - *Homepage*: https://github.com/lawrennd/ods
 - *Documentation*: Available through the GitHub repository
-- *License*: MIT 
+- *License*: MIT
