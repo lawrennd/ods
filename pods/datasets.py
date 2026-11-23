@@ -533,6 +533,171 @@ def football_data(season="1617", data_set="football_data"):
     )
 
 
+F1_2011_GRAND_PRIX = (
+    "Australia",
+    "Malaysia",
+    "China",
+    "Turkey",
+    "Spain",
+    "Monaco",
+    "Canada",
+    "Europe",
+    "GreatBritain",
+    "Germany",
+    "Hungary",
+    "Belgium",
+    "Italy",
+    "Singapore",
+    "Japan",
+    "Korea",
+    "India",
+)
+
+# Belgium FP1 is missing from the 2011 pack.
+F1_2011_SESSIONS = {
+    gp: ("FP1", "FP2", "FP3", "Q") for gp in F1_2011_GRAND_PRIX
+}
+F1_2011_SESSIONS["Belgium"] = ("FP2", "FP3", "Q")
+
+
+def _f1_2011_fastest_clean(laps):
+    """Per-driver minimum finite non-pit lap time (MATLAB fastestLap spirit)."""
+    clean = laps[(laps["pit_stop"].astype(int) == 0) & laps["lap_time_s"].notna()].copy()
+    if clean.empty:
+        return clean.iloc[0:0]
+    idx = clean.groupby("driver_number")["lap_time_s"].idxmin()
+    return clean.loc[idx].sort_values("driver_number").reset_index(drop=True)
+
+
+def _f1_2011_qualifying_bests(laps):
+    """Build Q1/Q2/Q3 bests per driver; fall back to session best if unlabelled."""
+    drivers = (
+        laps[["driver_number", "abbreviation", "driver_name", "team", "team_index"]]
+        .drop_duplicates("driver_number")
+        .sort_values("driver_number")
+        .reset_index(drop=True)
+    )
+    clean = laps[(laps["pit_stop"].astype(int) == 0) & laps["lap_time_s"].notna()]
+    q1 = q2 = q3 = None
+    if "q_segment" in clean.columns and clean["q_segment"].fillna("").astype(str).str.len().gt(0).any():
+        for segment, col in (("Q1", "q1_s"), ("Q2", "q2_s"), ("Q3", "q3_s")):
+            seg = clean[clean["q_segment"] == segment]
+            if seg.empty:
+                drivers[col] = np.nan
+            else:
+                best = seg.groupby("driver_number")["lap_time_s"].min()
+                drivers[col] = drivers["driver_number"].map(best)
+        q_cols = ["q1_s", "q2_s", "q3_s"]
+        drivers["best_s"] = drivers[q_cols].min(axis=1, skipna=True)
+    else:
+        best = clean.groupby("driver_number")["lap_time_s"].min()
+        drivers["q1_s"] = np.nan
+        drivers["q2_s"] = np.nan
+        drivers["q3_s"] = np.nan
+        drivers["best_s"] = drivers["driver_number"].map(best)
+    return drivers
+
+
+def f1_2011_practice_qualifying(
+    grand_prix="GreatBritain",
+    practice="FP3",
+    data_set="f1_2011_practice_qualifying",
+    refresh_data=False,
+):
+    """Load 2011 practice and qualifying laps from datasets_mirror.
+
+    Mirror files store **all** laps. This loader also returns MATLAB-style
+    aggregates: fastest clean practice lap (``X``) and qualifying bests
+    (``Y`` with Q1/Q2/Q3 columns when segment labels are present).
+
+    :param grand_prix: Timing-folder name, e.g. ``GreatBritain``, ``Canada``.
+    :param practice: ``FP1``, ``FP2``, or ``FP3`` (default ``FP3``).
+    :param refresh_data: Re-download even if cached.
+    """
+    if grand_prix not in F1_2011_GRAND_PRIX:
+        raise ValueError(
+            "Unknown grand_prix {!r}. Choose one of: {}".format(
+                grand_prix, ", ".join(F1_2011_GRAND_PRIX)
+            )
+        )
+    if practice not in ("FP1", "FP2", "FP3"):
+        raise ValueError("practice must be 'FP1', 'FP2', or 'FP3'")
+    available = F1_2011_SESSIONS[grand_prix]
+    if practice not in available:
+        raise ValueError(
+            "{} has no {} table in the 2011 pack (available: {})".format(
+                grand_prix, practice, ", ".join(available)
+            )
+        )
+
+    data_name = "{}_{}".format(data_set, grand_prix)
+    access.data_resources[data_name] = copy.deepcopy(access.data_resources[data_set])
+    # Download only the practice session requested plus qualifying.
+    wanted = [practice, "Q"]
+    dirs = [grand_prix] * len(wanted)
+    files = ["{}_laps.csv".format(s) for s in wanted]
+    access.data_resources[data_name]["dirs"] = [dirs]
+    access.data_resources[data_name]["files"] = [files]
+    access.data_resources[data_name].pop("suffices", None)
+
+    if refresh_data or not access.data_available(data_name):
+        if refresh_data:
+            access.clear_cache(data_name)
+        access.download_data(data_name)
+
+    race_dir = os.path.join(access.DATAPATH, data_name, grand_prix)
+    practice_path = os.path.join(race_dir, "{}_laps.csv".format(practice))
+    q_path = os.path.join(race_dir, "Q_laps.csv")
+    practice_laps = pd.read_csv(practice_path)
+    qualifying_laps = pd.read_csv(q_path)
+
+    practice_best = _f1_2011_fastest_clean(practice_laps)
+    q_best = _f1_2011_qualifying_bests(qualifying_laps)
+
+    meta_cols = ["driver_number", "abbreviation", "driver_name", "team", "team_index"]
+    practice_slim = practice_best[meta_cols + ["lap_time_s"]].rename(
+        columns={"lap_time_s": "practice_s"}
+    )
+    q_slim = q_best[["driver_number", "q1_s", "q2_s", "q3_s", "best_s"]]
+    merged = practice_slim.merge(q_slim, on="driver_number", how="inner")
+
+    X = merged["practice_s"].values.astype(float)[:, None]
+    Y = np.column_stack(
+        [
+            merged["q1_s"].values.astype(float),
+            merged["q2_s"].values.astype(float),
+            merged["q3_s"].values.astype(float),
+        ]
+    )
+    driver_number = merged["driver_number"].values
+    abbreviation = merged["abbreviation"].values
+    team = merged["team"].values
+    team_index = merged["team_index"].values.astype(int)
+
+    return access.data_details_return(
+        {
+            "X": X,
+            "Y": Y,
+            "driver_number": driver_number,
+            "abbreviation": abbreviation,
+            "team": team,
+            "team_index": team_index,
+            "practice_laps": practice_laps,
+            "qualifying_laps": qualifying_laps,
+            "practice_best": practice_best,
+            "qualifying_best": q_best,
+            "grand_prix": grand_prix,
+            "practice": practice,
+            "year": 2011,
+            "info": (
+                "2011 {} {} fastest clean laps (X) and qualifying Q1/Q2/Q3 "
+                "bests (Y); full lap tables in practice_laps / qualifying_laps."
+            ).format(grand_prix, practice),
+        },
+        data_set,
+    )
+
+
 UK_APARTMENTS_MONTHS = ["2012-{0:02d}".format(m) for m in range(2, 13)] + [
     "2013-{0:02d}".format(m) for m in range(1, 10)
 ]
