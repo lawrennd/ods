@@ -10,57 +10,44 @@ jobs:
     environment: release
     permissions:
       contents: read
-      id-token: write  # For trusted publishing
+      id-token: write  # Trusted Publishing (OIDC)
     steps:
     - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v6
       with:
         python-version: "3.11"
-    
-    - name: Install Poetry
-      uses: snok/install-poetry@v1
-      with:
-        version: latest
-        virtualenvs-create: true
-        virtualenvs-in-project: true
-    
+        enable-cache: true
+
     - name: Install dependencies
-      run: |
-        poetry install --with dev
-    
+      run: uv sync --frozen --group dev --all-extras
+
     - name: Run tests
-      run: |
-        poetry run pytest --cov=pods --cov-report=xml
-    
+      run: uv run pytest --cov=pods --cov-report=xml
+
     - name: Check version matches release tag
       run: |
         RELEASE_VERSION=${GITHUB_REF#refs/tags/v}
-        POETRY_VERSION=$(poetry version -s)
-        if [ "$RELEASE_VERSION" != "$POETRY_VERSION" ]; then
-          echo "Error: Release version $RELEASE_VERSION doesn't match Poetry version $POETRY_VERSION"
+        PROJECT_VERSION=$(uv version --short)
+        if [ "$RELEASE_VERSION" != "$PROJECT_VERSION" ]; then
+          echo "Error: Release version $RELEASE_VERSION doesn't match project version $PROJECT_VERSION"
           exit 1
         fi
         echo "Version check passed: $RELEASE_VERSION"
-    
+
     - name: Build package
-      run: |
-        poetry build
-    
-    - name: Verify package contents
-      run: |
-        poetry run twine check dist/*
-    
+      run: uv build
+
     - name: Publish to PyPI
       env:
-        POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
-      run: |
-        poetry publish --no-interaction
-    
+        # Fallback if Trusted Publishing is not configured on PyPI.
+        # Prefer OIDC (id-token: write + environment: release).
+        UV_PUBLISH_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+      run: uv publish
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: dist
         path: dist/
- 

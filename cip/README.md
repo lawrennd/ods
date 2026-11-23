@@ -38,7 +38,7 @@ Each CIP can have one of the following statuses:
 - [CIP-0001](./cip0001.md): Comprehensive Test Suite Improvement and Fixes
 - [CIP-0002](./cip0002.md): Sphinx Documentation and GitHub Workflow
 - [CIP-0003](./cip0003.md): Pods dataset access via lynguine materialise (In Progress)
-- [CIP-0004](./cip0004.md): Migrate package management from Poetry to uv (Proposed)
+- [CIP-0004](./cip0004.md): Migrate package management from Poetry to uv (In Progress)
 
 ## Creating a Good CIP
 

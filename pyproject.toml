@@ -1,21 +1,22 @@
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.poetry]
+[project]
 name = "pods"
 version = "0.1.19"
 description = "Python software for Open Data Science"
-authors = ["Neil D. Lawrence <lawrennd@gmail.com>"]
 readme = "README.md"
-homepage = "https://github.com/lawrennd/ods"
-repository = "https://github.com/lawrennd/ods"
 license = "MIT"
-packages = [{include = "pods"}]
-include = [
-    "pods/defaults.cfg",
-    "pods/data_resources.json",
-    "pods/football_teams.json"
+authors = [
+    { name = "Neil D. Lawrence", email = "lawrennd@gmail.com" },
+]
+requires-python = ">=3.10"
+dependencies = [
+    "pandas",
+    "PyYAML",
+    "scipy",
+    "numpy>=1.26",
 ]
 classifiers = [
     "License :: OSI Approved :: MIT License",
@@ -25,33 +26,14 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: Python :: Implementation :: PyPy"
+    "Programming Language :: Python :: Implementation :: PyPy",
 ]
 
-[tool.poetry.scripts]
-test = "pytest:main"
+[project.urls]
+Homepage = "https://github.com/lawrennd/ods"
+Repository = "https://github.com/lawrennd/ods"
 
-[tool.poetry.dependencies]
-python = ">=3.10"
-pandas = "*"
-PyYAML = "*"
-scipy = "*"
-numpy = ">=1.26"
-
-[tool.poetry.group.dev.dependencies]
-twine = "*"
-pytest = "*"
-pytest-cov = "*"
-mock = "*"
-h5py = "*"
-pytrends = "*"
-geopandas = "*"
-astropy = "*"
-netpbmfile = "*"
-gpxpy = "*"
-openpyxl = "*"
-
-[tool.poetry.extras]
+[project.optional-dependencies]
 hdf5-compatibility = ["h5py"]
 google-trends-interface = ["pytrends"]
 nigerian-nmis-data = ["geopandas"]
@@ -59,7 +41,38 @@ kepler-telescope-light-curves = ["astropy"]
 olivetti-faces = ["netpbmfile"]
 gpx-data = ["gpxpy"]
 excel-files = ["openpyxl"]
-all-datasets = ["h5py", "pytrends", "geopandas", "astropy", "netpbmfile", "gpxpy", "openpyxl"]
+all-datasets = [
+    "h5py",
+    "pytrends",
+    "geopandas",
+    "astropy",
+    "netpbmfile",
+    "gpxpy",
+    "openpyxl",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "mock",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["pods"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"pods/defaults.cfg" = "pods/defaults.cfg"
+"pods/data_resources.json" = "pods/data_resources.json"
+"pods/football_teams.json" = "pods/football_teams.json"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/pods",
+    "/README.md",
+    "/LICENSE.txt",
+    "/pyproject.toml",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["pods/testing"]
@@ -67,4 +80,3 @@ python_files = ["*_tests.py", "test_*.py"]
 python_classes = ["*Tests", "Test*"]
 python_functions = ["test_*"]
 addopts = "-v --tb=short"
-
