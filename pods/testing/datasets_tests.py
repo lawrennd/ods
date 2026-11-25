@@ -48,6 +48,8 @@ dataset_helpers = [
 # every volume (transient 5xx noise in CI). Covered separately with one volume.
 dataset_dimension_skip = {
     "pmlr",
+    # Mirror pack not published until curation lands; covered by dedicated tests.
+    "f1_2011_practice_qualifying",
 }
 
 

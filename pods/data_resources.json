@@ -950,5 +950,27 @@
             "https://github.com/lawrennd/datasets_mirror/raw/main/grid_corpus_vowels/"
         ],
         "original_urls": []
+    },
+    "f1_2011_practice_qualifying": {
+        "citation": "Derived numeric tables from 2011 Formula 1 weekend timing, curated for University of Sheffield research demos on qualifying cut-off prediction. Not an official FIA or Formula 1 product.",
+        "details": "2011 practice and qualifying all-lap tables (FP1/FP2/FP3/Q) for seventeen grands prix. Default loader call uses GreatBritain FP3. Hosted on datasets_mirror as curated CSVs for research and teaching. See CIP-0005.",
+        "files": [
+            [
+                "FP3_laps.csv",
+                "Q_laps.csv"
+            ]
+        ],
+        "dirs": [
+            [
+                "GreatBritain",
+                "GreatBritain"
+            ]
+        ],
+        "license": "Curated research/teaching tables. Confirm redistribution posture before wide use.",
+        "size": 3865974,
+        "urls": [
+            "https://github.com/lawrennd/datasets_mirror/raw/main/f1_2011_practice_qualifying/"
+        ],
+        "original_urls": []
     }
 }

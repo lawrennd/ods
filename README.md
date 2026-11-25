@@ -21,6 +21,18 @@ pip install pods
 ```
 
 
+## Optional dataset extras
+
+Some loaders need extra packages. Install only what you need, for example:
+
+```
+pip install 'pods[all-datasets]'
+```
+
+Historical Formula 1 practice→qualifying tables (CIP-0005; 2011 season,
+all-lap CSVs on datasets_mirror) are available as
+`pods.datasets.f1_2011_practice_qualifying` (default: GreatBritain FP3).
+
 ## Release Notes
 
 Note that from version 0.0.32-alpha non-data set loading functionality has been moved to other packages. Check [`goggles`](https://github.com/lawrennd/goggles), [`assessor`](https://github.com/lawrennd/assessor) and [`notutils`](https://github.com/lawrennd/notutils).
